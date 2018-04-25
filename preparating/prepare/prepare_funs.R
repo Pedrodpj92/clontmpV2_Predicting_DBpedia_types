@@ -20,19 +20,19 @@ prepare_properties <- function(file_properties_In,
   original_resources <- read.csv(file=file_properties_In,
                                  header=FALSE, sep=" ", encoding = "UTF-8", stringsAsFactors = FALSE, quote = "")
 
-  print(nrow(original_resources))
+  # print(nrow(original_resources))
   original_resources <- original_resources[grep(domain_resourcesURI,original_resources$V3),]
   original_resources$V4 <- NULL
   names(original_resources) <- c("s","p","o")
   original_resources$s <- as.factor(original_resources$s)
   original_resources$p <- as.factor(original_resources$p)
   original_resources$o <- as.factor(original_resources$o)
-  print(nrow(original_resources))
+  # print(nrow(original_resources))
 
   
   conversion_Matriz <- original_resources[,c(3,2)]
   conversion_Matriz <- dcast(conversion_Matriz, o ~ p, fill=0)#ojo, puede tardar bastante
-  print(nrow(conversion_Matriz))
+  # print(nrow(conversion_Matriz))
   write.csv(conversion_Matriz, file = file_object_propertiesMatrix_Out,
             fileEncoding = "UTF-8", row.names=FALSE)
   
@@ -207,7 +207,7 @@ prepare_app1 <- function(file_object_propertiesMatrix_In, file_instance_types_In
                      header=TRUE, sep=" ", encoding = "UTF-8")
   
   
-  
+  original_types <- original_types[,c(1,3)]
   
   soloNivel6 <- original_types[original_types$o %in% nivel6$nivel6, ] 
   

@@ -190,7 +190,7 @@ app2_C50 <- function(semilla, pathInput, pathOutput, pathOutputModel, nameOutput
   salida_test1$p <- "<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>"
   salida_test1[,c(1,2,3)] <- salida_test1[,c(1,3,2)]
   write.table(salida_test1, file = paste(pathOutput,nameOutputFile,".ttl",sep=""),
-              fileEncoding = "UTF-8", sep = " ", row.names=FALSE, col.names=FALSE)
+              fileEncoding = "UTF-8", sep = " ", row.names=FALSE, col.names=FALSE, quote = FALSE)
   
   return(0)
   
@@ -428,7 +428,7 @@ app2_DL <- function(semilla, pathInput, pathOutput, pathOutputModel, nameOutputF
   salida_test1[,c(1,2,3)] <- salida_test1[,c(1,3,2)]
   colnames(salida_test1) <- c("s","p","o")
   write.table(salida_test1, file = paste(pathOutput,nameOutputFile,".ttl", sep = ''),
-              fileEncoding = "UTF-8", sep = " ", row.names=FALSE, col.names=FALSE)
+              fileEncoding = "UTF-8", sep = " ", row.names=FALSE, col.names=FALSE, quote = FALSE)
   
   
   return(0)
@@ -692,7 +692,7 @@ app2_RF <- function(semilla, pathInput, pathOutput, pathOutputModel,  nameOutput
   salida_test1_rf$p <- "<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>"
   salida_test1_rf[,c(1,2,3)] <- salida_test1_rf[,c(1,3,2)]
   write.table(salida_test1_rf, file = paste(pathOutput,nameOutputFile,".ttl", sep = ''),
-            fileEncoding = "UTF-8",sep=" ", row.names=FALSE,col.names=FALSE)
+            fileEncoding = "UTF-8",sep=" ", row.names=FALSE,col.names=FALSE, quote = FALSE)
   
   return(0)
 }

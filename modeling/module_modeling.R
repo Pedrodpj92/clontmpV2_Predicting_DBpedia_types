@@ -120,9 +120,18 @@ modela <- function(approachSelected,
       }else{
         stop("global approach (approach1) can just be executed with Naive Bayes, Deep Learning or Random Forest.", call.=FALSE)
       }
-      system(command = paste("java -jar ",getwd(),"/levels_ontology/dbotypes.jar ",
-                             getwd(),"/levels_ontology/",ontology," ",paste(pathOutput,
-                                                                            nameOutputFile,".ttl",sep = ""),sep=""))
+      system(command = paste("java -jar ",
+                             getwd(),"/levels_ontology/dbotypes.jar ",
+                             getwd(),"/levels_ontology/",ontology,
+                             " ",
+                             paste(pathOutput,
+                                   nameOutputFile,".ttl",sep = ""),sep=""))
+      system(command = paste("mv ",
+                             paste(pathOutput,
+                                   nameOutputFile,".ttl.extended.csv",sep = ""),
+                             " ",
+                             paste(pathOutput,
+                                   nameOutputFile,".ttl",sep = ""),sep=""))
     }else if(approachSelected %in% c("multilevel_ap2")){
       if(algorithmSelected %in% c("C5.0")){
         app2_C50(semilla = semilla,

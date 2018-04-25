@@ -27,25 +27,25 @@ preprocesa <- function(file_mapping_based_properties_In,
   file_learningSet_Intermediate <- paste(getwd(),"/intermediateData/learningSet.csv",sep="")
   # path_splits_Intermediate <-paste(getwd(),"/intermediateData/crossValidation/",sep="")
   
-#  prepare_properties(file_properties_In = file_mapping_based_properties_In,
-#                     file_object_propertiesMatrix_Out = file_object_propertiesMatrix_Intermediate,
-#                     domain_resourcesURI = domain_resources)
-
+  prepare_properties(file_properties_In = file_mapping_based_properties_In,
+                     file_object_propertiesMatrix_Out = file_object_propertiesMatrix_Intermediate,
+                     domain_resourcesURI = domain_resources)
+  
   # a ser posible, unir en una sola función, añadir parámetro isApproach1
-#  if(isApproach1){
-#    prepare_app1(file_object_propertiesMatrix_In = file_object_propertiesMatrix_Intermediate,
-#                 file_instance_types_In = file_instance_types_In,
-#                 file_learningSet_Out = file_learningSet_Intermediate,
-#                 path_levels = path_levels,
-#                 domain_resourcesURI = domain_resources)
-#  }else{
-#    prepare_app2and3(file_object_propertiesMatrix_In = file_object_propertiesMatrix_Intermediate,
-#                     file_instance_types_In = file_instance_types_In,
-#                     file_learningSet_Out = file_learningSet_Intermediate,
-#                     path_levels = path_levels,
-#                     domain_resourcesURI = domain_resources)
-#  }
-
+  if(isApproach1){
+    prepare_app1(file_object_propertiesMatrix_In = file_object_propertiesMatrix_Intermediate,
+                 file_instance_types_In = file_instance_types_In,
+                 file_learningSet_Out = file_learningSet_Intermediate,
+                 path_levels = path_levels,
+                 domain_resourcesURI = domain_resources)
+  }else{
+    prepare_app2and3(file_object_propertiesMatrix_In = file_object_propertiesMatrix_Intermediate,
+                     file_instance_types_In = file_instance_types_In,
+                     file_learningSet_Out = file_learningSet_Intermediate,
+                     path_levels = path_levels,
+                     domain_resourcesURI = domain_resources)
+  }
+  
   
   if(isCrossValidation){
     divide_nSplit(file_learningSet_In = file_learningSet_Intermediate,

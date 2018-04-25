@@ -56,29 +56,23 @@ option_list <- list(
   make_option(c("-s","--seed"), type="integer", default = 1234,
               help="random number generator seed for algorithms that are dependent on randomization [default= %default]",
               metavar = "integer"),
-  make_option(c("-x","--executionMode"), type="integer", default = NULL,
-              help="this main is divided in 3 modules: preprocesing, modeling, evaluating (predicting). Flag -x or --executionMode specify where should start this main script. <P_M_E | M_E | E>",
-              metavar = "integer")
+  make_option(c("-x","--executionMode"), type="character", default = NULL,
+              help="this main is divided in 3 modules: preprocesing, modeling, evaluating (predicting). Flag -x or --executionMode specify where should start this main script. 
+			  This is useful, for instance, to generate the same train/validation data one time and execute several approaches and/or algorithms. <P_M_E | M_E | E>",
+              metavar = "character")
 )
 
 
 opt_parser <- OptionParser(usage = "Usage: %prog <options>",
                            description = "Description:
-                           updating........",
+                           This software provides a complete Data Mining workflow in order to infer new DBpedia types on resources which are found in range triples positions (as objects).
+                            See 'Inferring New Types on Large Datasets Applying Ontology Class Hierarchy Classifiers: The DBpedia Case' (under revision in )
+                           ",
                            epilogue = "Examples:
-                             -> using multilevel approach (2) with Random Forest algorithm and fiveFold test. Check out input folder is the first path showed with -i flag and generated files will be located at second path, as -o flag shows. Look for files with 'output_ap2_5f_execution1' to find related outputs with your experiment.
-                           %prog -a multilevel_ap2 -l RF -t fiveFold -i /home/myExperiments/aboutDBpedia_hierarchyClasssifiers/approach2/crossValidation/ -o /home/myExperiments/aboutDBpedia_hierarchyClasssifiers/approach2/crossValidation/output/ -f output_ap2_5f_execution1
-                             -> using cascade approach (3) with Deep Learning algorithm and test 25 (resources with at least 25 ingoing properties). Watch out in this example where related paths are used instance of absolute paths. 
-                           %prog -a cascade_ap3 -l DL -t test25 -i ./data/ap3/t25/ -o ./output/ap3_t25/ -f out_ap3_t25_execution7
-                           
-                           ACTUALIZAR....
-                           
-                           Ejemplo nuevo, integrar cuando sea posible
-                           ./main_predicting_DBpedia_types_V2.R -a multilevel_ap2 -l RF -c FALSE -t 10 -n 3000 -d ES -v 39 -m path_dummy_properties -i path_dummy_types -o path_dummy_output
-
-
-                           otro ejemplo....
-                           ./main_predicting_DBpedia_types_V2.R -a multilevel_ap2 -l RF -c TRUE -n 5 -d ES -v 2014 -m path_dummy_properties -i path_dummy_types -o path_dummy_output",
+                             ./main_predicting_DBpedia_types_P_M_E.R -a global_ap1 -l DL -c FALSE -t 1 -n 2500 -d ES -v 201610 -m ~/inputData/mappingbased_objects_uncleaned_es.ttl -i ~/inputData/instance_types_completo_es.ttl -o ~/outputData/ -f ejecucion1_app1_DL_test1 -s 1234 -x P_M_E
+                            
+                            In this case, The program will use first approach (global) with a deep learning algoritm, with one train/validate split where 2500 validation cases have at least 1 ingoing property. This case is used on EsDBpedia with 2016-10 version ontology. After that, in command example can be see both input data (properties and types) followed by output path, and files identifier. All process will use '1234' as random seed. At -x option will indicate a full workflow (preprocesing, modelating and evaluating)
+                           ",
                            option_list=option_list)
 
 
@@ -165,12 +159,16 @@ if(opt$domain %in% c("ES")){
 }
 
 ontologia <- "39"
+ontologia_owl <- "dbpedia_3.9.owl"
 if(opt$versionOntology %in% c("39")){
   ontologia <- "39"
+  ontologia_owl <- "dbpedia_3.9.owl"
 }else if(opt$versionOntology %in% c("2014")){
   ontologia <- "2014"
+  ontologia_owl <- "dbpedia_2014.owl"
 }else if(opt$versionOntology %in% c("201610")){
   ontologia <- "201610"
+  ontologia_owl <- "dbpedia_2016-10.owl"
 }else{
   print("error, mejorar aviso, aunque nunca debería llegar a este punto")
 }
@@ -197,7 +195,7 @@ if(opt$executionMode %in% c("P_M_E")){
              nSplits = opt$number_casesOrFolds,
              n_cases_validating = opt$number_casesOrFolds,
              test1_10_25 = opt$test_ingoingCondition,
-             tr_l2 = "trainingTest_knownResources_L2.csv", #Al tratarse de archivos intermedios el usuario no tiene por qué saber de su existencia
+             tr_l2 = "trainingTest_knownResources_L2.csv", #Al tratarse de archivos intermedios se puede dejar así, aunque estaría bien mejorar esta parte
              vl_l2 = "validatingTest_knownResources_L2.csv",
              tr_l3 = "trainingTest_knownResources_L3.csv",
              vl_l3 = "validatingTest_knownResources_L3.csv",
@@ -208,7 +206,30 @@ if(opt$executionMode %in% c("P_M_E")){
              tr_l6 = "trainingTest_knownResources_L6.csv",
              vl_l6 = "validatingTest_knownResources_L6.csv",
              reservados = "reserva.ttl")
+  
+  if(isApproach1){
+
+
+
+
+    system(command = paste("java -jar ",
+                           getwd(),"/levels_ontology/dbotypes.jar ",
+                           getwd(),"/levels_ontology/",ontologia_owl,
+                           " ",
+                           paste(getwd(),"/intermediateData/reserva.ttl",sep=""),
+                           sep=""))
+    system(command = paste("mv ",
+                           paste(getwd(),"/intermediateData/reserva.ttl.extended.csv",sep=""),
+                           " ",
+                           paste(getwd(),"/intermediateData/reserva.ttl",sep=""),sep=""))
+  }
 }
+
+# system(command = paste("cp ",
+#                        paste(getwd(),"/intermediateData/reserva.ttl",sep=""),
+#                        " ",
+#                        paste(getwd(),"/intermediateData/reserva_a_ver_que_tiene.ttl",sep=""),
+#                        sep=""))
 
 
 if(opt$executionMode %in% c("P_M_E","M_E")){
@@ -217,6 +238,7 @@ if(opt$executionMode %in% c("P_M_E","M_E")){
          semilla = opt$seed,
          isCrossValidation = as.logical(opt$cross_validation),
          nSplits = opt$number_casesOrFolds,
+         ontology = ontologia_owl,
          pathInput = paste(getwd(),"/intermediateData/",sep=""),
          pathOutput = opt$pathOut,
          pathOutputModel = opt$pathOut,
@@ -249,6 +271,23 @@ if(as.logical(opt$cross_validation)){
            pathSalida = paste(opt$pathOut,"fold",i,"/","evaluacion_",opt$fileOut,".csv",sep=""))
   }
 }else{
+  
+  # if(isApproach1){
+  #   
+  # 
+  #   
+  #   
+  #   system(command = paste("java -jar ",
+  #                          getwd(),"/levels_ontology/dbotypes.jar ",
+  #                          getwd(),"/levels_ontology/",ontologia_owl,
+  #                          " ",
+  #                          paste(getwd(),"/intermediateData/reserva.ttl",sep=""),
+  #                          sep=""))
+  #   system(command = paste("mv ",
+  #                          paste(getwd(),"/intermediateData/reserva.ttl.extended.csv",sep=""),
+  #                          " ",
+  #                          paste(getwd(),"/intermediateData/reserva.ttl",sep=""),sep=""))
+  # }
   evalua(pathDT_GeneradoCompleto = paste(opt$pathOut,opt$fileOut,".ttl",sep=""),
          pathDT_ReservadoCompleto = paste(getwd(),"/intermediateData/reserva.ttl",sep=""),
          pathNivelesCompleto = paste(getwd(),"/levels_ontology/",ontologia,"/",sep=""),

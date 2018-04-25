@@ -26,7 +26,7 @@ app1_nb <- function(semilla, pathInput, pathOutput, pathOutputModel, nameOutputF
   
   
   nb_global_Approach1_test <- h2o.naiveBayes(
-    model_id=paste("app1_nb_model_",nameOutputFile,sep=''),
+    model_id=paste("model_",nameOutputFile,sep=''),
     training_frame=train_test, 
     validation_frame=valid_test[,2:ncol(valid_test)],
     x=2:(ncol(train_test)-1),
@@ -74,7 +74,7 @@ app1_dl <- function(semilla, pathInput, pathOutput, pathOutputModel, nameOutputF
   validating_test[2:ncol(validating_test)] <- lapply(validating_test[,2:(ncol(validating_test)-1)], function(x) as.numeric(as.character(x)))
   
   dl_global_Approach1_test <- h2o.deeplearning(
-    model_id=paste("app1_dl_model_",nameOutputFile,sep=''),
+    model_id=paste("model_",nameOutputFile,sep=''),
     training_frame=train_test, 
     validation_frame=valid_test[,2:ncol(valid_test)],
     x=2:(ncol(train_test)-1),
@@ -120,7 +120,7 @@ app1_rf <- function(semilla, pathInput, pathOutput, pathOutputModel, nameOutputF
   validating_test[2:ncol(validating_test)] <- lapply(validating_test[,2:(ncol(validating_test)-1)], function(x) as.numeric(as.character(x)))
   
   rf_global_Approach1_test <- h2o.randomForest(
-    model_id=paste("app1_rf_model_",nameOutputFile,sep=''),
+    model_id=paste("model_",nameOutputFile,sep=''),
     training_frame=train_test, 
     validation_frame=valid_test[,2:ncol(valid_test)],
     x=2:(ncol(train_test)-1),

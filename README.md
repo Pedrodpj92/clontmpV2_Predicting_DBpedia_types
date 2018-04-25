@@ -107,7 +107,7 @@ Options:
                 random number generator seed for algorithms that are dependent on randomization [default= 1234]
 
         -x CHARACTER, --executionMode=CHARACTER
-                this main is divided in 3 modules: preprocesing, modeling, evaluating (predicting). Flag -x or --executionMode specify where should start this main script. <P_M_E | M_E | E>
+                this main is divided in 3 modules: preprocesing, modeling, evaluating (predicting). Flag -x or --executionMode specify where should start this main script. This is useful, for instance, to generate the same train/validation data one time and execute several approaches and/or algorithms. <P_M_E | M_E | E>
 
         -h, --help
                 Show this help message and exit
@@ -115,7 +115,7 @@ Options:
 Examples:
                              ./main_predicting_DBpedia_types_P_M_E.R -a global_ap1 -l DL -c FALSE -t 1 -n 2500 -d ES -v 201610 -m ~/inputData/mappingbased_objects_uncleaned_es.ttl -i ~/inputData/instance_types_completo_es.ttl -o ~/outputData/ -f ejecucion1_app1_DL_test1 -s 1234 -x P_M_E
 
-                            In this case, The program will use first approach (global) with a deep learning algoritm, with one train/validate split where 2500 validation cases have at least 1 ingoing property. This case is used on EsDBpedia with 2016-10 version ontology. After that, in command example can be see both input data (properties and types) followed by output path, and files identifier. All process will use '1234' as random seed. At -x option will indicate a full workflow (preprocesing, modelating and evaluating)
+                            In this case, The program will use first approach (global) with a deep learning algoritm, with one train/validate split where 2500 validation cases have at least 1 ingoing property. This case is used on EsDBpedia with 2016-10 version ontology. After that, in command example can be see both input data (properties and types) followed by output path, and files identifier. All process will use '1234' as random seed. At -x option will indicate a full workflow (preprocesing, modeling and evaluating)
 
 ```
 
