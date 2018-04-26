@@ -11,3 +11,83 @@ for each ontology class level. For this approach we used only one training metho
 C5.0, an improved version of C4.5.
 
 <img src="http://es-ta.linkeddata.es/app2training.png" width="1200">
+
+# Functions
+The purpose of this section is only clarify develop details.
+
+## app2_C50 
+### Description:
+This function calls C5.0 library to train a decision tree using C5.0 model for approach 2.
+### Function variables:
+* semilla
+* pathInput
+* pathOutput
+* pathOutputModel
+* nameOutputFile
+* tr
+* vl
+* tr_l2
+* vl_l2
+* tr_l3
+* vl_l3
+* tr_l4
+* vl_l4
+* tr_l5
+* vl_l5
+### Input expected:
+* Training files
+* Validating files
+## Output expected:
+* ttl file with predictions done, which resources are found in validation dataset.
+
+## app2_DL 
+### Description:
+This function calls H2O API functions to train a Deep Learning (multi-layer feedforward) model for approach 2.
+### Function variables:
+* semilla
+* pathInput
+* pathOutput
+* pathOutputModel
+* nameOutputFile
+* tr
+* vl
+* tr_l2
+* vl_l2
+* tr_l3
+* vl_l3
+* tr_l4
+* vl_l4
+* tr_l5
+* vl_l5
+### Input expected:
+* Training files
+* Validating files
+## Output expected:
+* ttl file with predictions done, which resources are found in validation dataset.
+
+
+## app2_RF 
+### Description:
+This function calls H2O API functions to train a Random Forest model for approach 2.
+### Function variables:
+* semilla
+* pathInput
+* pathOutput
+* pathOutputModel
+* nameOutputFile
+* tr
+* vl
+* tr_l2
+* vl_l2
+* tr_l3
+* vl_l3
+* tr_l4
+* vl_l4
+* tr_l5
+* vl_l5
+### Input expected:
+* Training files
+* Validating files
+## Output expected:
+* ttl file with predictions done, which resources are found in validation dataset.
+

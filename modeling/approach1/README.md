@@ -13,3 +13,58 @@ these are their most specific types.
 In this approach we have used 3 different training methods: Naïve Bayes, Random Forest and Deep Learning (multi-layer feedforward).
 
 <img src="http://es-ta.linkeddata.es/app1training.png" width="700">
+
+# Functions
+The purpose of this section is only clarify develop details.
+
+## app1_nb 
+### Description:
+This function calls H2O API functions to train a Naïve Bayes model for approach 1.
+### Function variables:
+* semilla
+* pathInput
+* pathOutput
+* pathOutputModel
+* nameOutputFile
+* tr
+* vl
+### Input expected:
+* Training file
+* Validating file
+## Output expected:
+* ttl file with predictions done, which resources are found in validation dataset.
+
+## app1_dl 
+### Description:
+This function calls H2O API functions to train a Deep Learning (multi-layer feedforward) model for approach 1.
+### Function variables:
+* semilla
+* pathInput
+* pathOutput
+* pathOutputModel
+* nameOutputFile
+* tr
+* vl
+### Input expected:
+* Training file
+* Validating file
+## Output expected:
+* ttl file with predictions done, which resources are found in validation dataset for approach 1.
+
+## app1_rf 
+### Description:
+This function calls H2O API functions to train a Random Forest model dataset for approach 1.
+### Function variables:
+* semilla
+* pathInput
+* pathOutput
+* pathOutputModel
+* nameOutputFile
+* tr
+* vl
+### Input expected:
+* Training file
+* Validating file
+## Output expected:
+* ttl file with predictions done, which resources are found in validation dataset.
+
