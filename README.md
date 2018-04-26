@@ -59,16 +59,14 @@ Navigate to the source folder and execute the main script with -h or --help to s
 $ ./main_predicting_DBpedia_types_P_M_E.R --help
 Usage: ./main_predicting_DBpedia_types_P_M_E.R <options>
 Description:
-                           This software provides a complete Data Mining workflow in order to infer new DBpedia types on resources which are found in range triples positions (as objects).
-                            See 'Inferring New Types on Large Datasets Applying Ontology Class Hierarchy Classifiers: The DBpedia Case' (under revision in )
-
+                           This software provides a complete Data Mining workflow for inferring new DBpedia types on resources which are found as objects.
 
 Options:
         -a CHARACTER, --approach=CHARACTER
                 approach selected. <global_ap1 | multilevel_ap2 | cascade_ap3>
-              global_ap1     - First approach, it learns from most specific type from each resource
+              global_ap1     - First approach, it learns from the most specific type of each resource
               multilevel_ap2 - Second approach, Local Classifiers per Level with binary decisions per level aimed to solve partial depth issue
-              cascade_ap3    - Third approach, Local Classifiers per Level with binary decisions per level and cascade process aimed to solve partial depth issue and reduce hierarchy inconcistencies
+              cascade_ap3    - Third approach, Local Classifiers per Level with binary decisions per level and cascade process, aimed to solve partial depth issue and reduce hierarchy inconcistencies
 
         -l CHARACTER, --algorithm=CHARACTER
                 algorithm used for the approach selected. <NB | C5.0 | DL | RF>.
@@ -78,13 +76,13 @@ Options:
               RF   - Random Forest
 
         -c LOGICAL, --cross_validation=LOGICAL
-                notify if divide process should be a simple split (train/test) or should be a cross_validation. <TRUE | FALSE>
+                decide whether the divide process should be a simple split (train/test) or should be a cross_validation. <TRUE | FALSE>
 
         -t INTEGER, --test_ingoingCondition=INTEGER
                 minimum amount of properties per resource reserved for tests. Only available on simple split (-c FALSE)
 
         -n INTEGER, --number_casesOrFolds=INTEGER
-                Points out the number of cases or the folds used depending on -cv condition option
+                the number of cases or the folds used depending on -cv condition option
 
         -d CHARACTER, --domain=CHARACTER
                 how starts URI's DBpedia resources. <EN | ES>
@@ -93,11 +91,11 @@ Options:
                 DBpedia ontology version. <39 | 2014 | 201610>
 
         -m CHARACTER, --mapping_based_properties=CHARACTER
-                path to input mapping_based_properties.ttl. In modern DBpedia versions it may be mapping_based_objects.ttl, it works well so.
+                path to input mapping_based_properties.ttl. In modern DBpedia versions it may appear as mapping_based_objects.ttl.
 
         -i CHARACTER, --instance_types=CHARACTER
-                path to input instance_types.ttl In modern DBpedia versions it may be splitted in 2 files, transitive and 'ending' (leves) types.
-              This main program assumes that types file are completed, so in case of divided files, should be merged previously
+                path to input instance_types.ttl In modern DBpedia versions it may appear splitted in 2 files, transitive and 'ending' (leves) types.
+              This main program assumes that types file are completed, so in case of divided files, they should be merged previously.
 
         -o CHARACTER, --pathOut=CHARACTER
                 path to output files. Directory should exist previously
@@ -109,7 +107,7 @@ Options:
                 random number generator seed for algorithms that are dependent on randomization [default= 1234]
 
         -x CHARACTER, --executionMode=CHARACTER
-                this main is divided in 3 modules: preprocesing, modeling, evaluating (predicting). Flag -x or --executionMode specify where should start this main script. This is useful, for instance, to generate the same train/validation data one time and execute several approaches and/or algorithms. <P_M_E | M_E | E>
+                this main is divided in 3 modules: preprocesing, modeling, evaluating (predicting). Flag -x or --executionMode specify where this main script should start. This is useful, for instance, to generate the same train/validation data once  and execute several approaches and/or algorithms. <P_M_E | M_E | E>
 
         -h, --help
                 Show this help message and exit
