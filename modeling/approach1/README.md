@@ -31,7 +31,7 @@ This function calls H2O API functions to train a Naïve Bayes model for approach
 ### Input expected:
 * Training file
 * Validating file
-## Output expected:
+### Output expected:
 * ttl file with predictions done, which resources are found in validation dataset.
 
 ## app1_dl 
@@ -48,7 +48,7 @@ This function calls H2O API functions to train a Deep Learning (multi-layer feed
 ### Input expected:
 * Training file
 * Validating file
-## Output expected:
+### Output expected:
 * ttl file with predictions done, which resources are found in validation dataset for approach 1.
 
 ## app1_rf 
@@ -65,6 +65,6 @@ This function calls H2O API functions to train a Random Forest model dataset for
 ### Input expected:
 * Training file
 * Validating file
-## Output expected:
+### Output expected:
 * ttl file with predictions done, which resources are found in validation dataset.
 
