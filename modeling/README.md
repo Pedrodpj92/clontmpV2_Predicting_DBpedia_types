@@ -1,17 +1,18 @@
 # Module 2: Modeling
 
-This section controls Machine Learning Models section. Each approach are explained in their own directories. 
+This module perform the tasks related to the Machine Learning Models training and evaluation. Each approach in further explained in their correponding directories. 
 
-Cross Validation option only are available on approach 2.
+Cross Validation option is only available on approach 2.
 
 To see full description and options, go to main README and help section.
 
 # Functions
-The purpose of this section is only clarify develop details.
+The purpose of this section is to clarify development details.
 
-## modela 
+## modeling 
 ### Description:
-This function calls the specific model function from main workflow. It also runs a simple execution or cross validation mode.
+This function calls the specific model function from the main workflow. 
+
 ### Function variables:
 * approachSelected
 * algorithmSelected
@@ -36,7 +37,7 @@ This function calls the specific model function from main workflow. It also runs
 * tr_l6
 * vl_l6
 ### Input expected:
-* Training files. One ore several depending on approach selected (1 or 2-3) and type of validation (simple or cross validation)
+* Training files. One or several depending on the approach selected (1 or 2-3) and type of validation (simple or cross validation)
 * Validating files
 ## Output expected:
 * csv file with each evaluation done
