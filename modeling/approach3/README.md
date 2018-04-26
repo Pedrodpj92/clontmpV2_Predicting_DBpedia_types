@@ -10,7 +10,7 @@ The third approach is also a multilevel approach. The features used by this
 approach are depicted in the following picture. In this approach we add a *cascade process*, aimed at avoiding inconsistencies in the predicted types (non *logical*
 paths).
 
-<img src="http://es-ta.linkeddata.es/app3training.png" width="1200">
+<img src="http://es-ta.linkeddata.es/app3training_v2.png" width="1200">
 
 
 # Functions
@@ -38,7 +38,7 @@ This function calls H2O API functions to train a Deep Learning (multi-layer feed
 ### Input expected:
 * Training files
 * Validating files
-## Output expected:
+### Output expected:
 * ttl file with predictions done, which resources are found in validation dataset.
 
 
@@ -64,5 +64,5 @@ This function calls H2O API functions to train a Random Forest model for approac
 ### Input expected:
 * Training files
 * Validating files
-## Output expected:
+### Output expected:
 * ttl file with predictions done, which resources are found in validation dataset.
