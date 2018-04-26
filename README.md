@@ -1,26 +1,28 @@
 # Predicting DBpedia types
 
-This project contains the source code of the set of models for inferrying new types on DBpedia, exploiting its class hierarchy. The main script (main_predicting_DBpedia_types_P_M_E.R) allows to reproduce several experiments carried out. Check out http://es-ta.linkeddata.es/ to explore details and download data to test experiments. See http://wiki.dbpedia.org/develop/datasets to look for properies and types datasets. Currently, it works with with DBpedia ontologies, specifically with 3.9, 2014 and 2016-10 on English and Spanish versions.
+This project contains the code for generating new types on the DBpedia dataset, exploiting its class hierarchy. 
+
+The main script (main_predicting_DBpedia_types_P_M_E.R) is the entry point for executing the different experiments avilable. Check out http://es-ta.linkeddata.es/ to explore details and download data to test experiments. 
+
+The current version works with the DBpedia ontology, versions 3.9, 2014 and 2016-10, for the English and Spanish datasets.
 
 ## Getting Started
-Clone or download the source code into your machine. Heed next section to find libraries and software used and how to install. 
+Clone or download the source code into your machine. Check next section to find libraries and software required and how to install them
 
 ### Prerequisites
 
+* 64-bits machine
 * [R 3.4.3 (2017-11-30)](https://www.r-project.org/ ) or later
 * [Java 1.7](https://www.java.com/es/download/) or later
 * [H2O library](https://www.h2o.ai/) version 3.16.0.1 or later
 * [C5.0 R library](https://cran.r-project.org/web/packages/C50/C50.pdf) version 0.1.0-24 or later
 * [optparse](https://cran.r-project.org/web/packages/optparse/optparse.pdf) version 1.4.4 or later
-* 64-bits machine
-
-
-other dependencies...
 * [RCurl](https://cran.r-project.org/web/packages/RCurl/RCurl.pdf) version 1.95-4.8 or later
 * [jsonlite](https://cran.r-project.org/web/packages/jsonlite/jsonlite.pdf) version 1.5 or later
  
 ### Installing R packages
-We recommend search last stable versions, but here you will find both last stable and what we used in Machine Learning(ML) libraries.
+The use of last stable versions is recommended, but here you point to both, last stable and what the ones we used.
+
 * Main common libraries and dependencies
 ```
 #http://docs.h2o.ai/h2o/latest-stable/h2o-docs/faq/r.html
@@ -52,7 +54,7 @@ install.packages(url_c50, repos=NULL, type="source")
 ```
  
 ## Running experiments
-Navigate with your prompt to source folder and execute -h or --help to see options. Use RScript command if you are under Windows (**watch out with PATH configuration**)
+Navigate to the source folder and execute the main script with -h or --help to see options. Use RScript command if you are under Windows (**mind PATH configuration**)
 ```
 $ ./main_predicting_DBpedia_types_P_M_E.R --help
 Usage: ./main_predicting_DBpedia_types_P_M_E.R <options>
@@ -115,7 +117,7 @@ Options:
 Examples:
                              ./main_predicting_DBpedia_types_P_M_E.R -a global_ap1 -l DL -c FALSE -t 1 -n 2500 -d ES -v 201610 -m ~/inputData/mappingbased_objects_uncleaned_es.ttl -i ~/inputData/instance_types_completo_es.ttl -o ~/outputData/ -f ejecucion1_app1_DL_test1 -s 1234 -x P_M_E
 
-                            In this case, The program will use first approach (global) with a deep learning algoritm, with one train/validate split where 2500 validation cases have at least 1 ingoing property. This case is used on EsDBpedia with 2016-10 version ontology. After that, in command example can be see both input data (properties and types) followed by output path, and files identifier. All process will use '1234' as random seed. At -x option will indicate a full workflow (preprocesing, modeling and evaluating)
+                            In this case, The program will use first approach (global) with a deep learning algoritm, with one train/validate split where 2500 validation cases have at least 1 ingoing property. This case is used on EsDBpedia with the 2016-10 ontology. After that, we specify both input data (properties and types) followed by output path, and files identifier. All processes will use '1234' as random seed. The -x option will indicate a full workflow (preprocesing, modeling and evaluating)
 
 ```
 
