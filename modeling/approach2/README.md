@@ -10,7 +10,7 @@ The approach 2 was named *multilevel* because we have models
 for each ontology class level. For this approach we used only one training method:
 C5.0, an improved version of C4.5.
 
-<img src="http://es-ta.linkeddata.es/app2training.png" width="1200">
+<img src="http://es-ta.linkeddata.es/app2training.png_v2" width="1200">
 
 # Functions
 The purpose of this section is only clarify develop details.
