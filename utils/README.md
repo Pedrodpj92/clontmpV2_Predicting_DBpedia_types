@@ -52,7 +52,7 @@ Calculates overlaping between two files in RDF turtle format (ttl). Use --help o
 ### Input expected:
 * First (Left) dataset to be compared
 * Second (Right) dataset to be compared
-## Output expected:
+### Output expected:
 * Inner join dataset. Triples that are found in both datasets.
 * Left excluding join dataset. Triples that are only found in first dataset.
 * Right excluding join dataset. Triples that are only found in second dataset.
