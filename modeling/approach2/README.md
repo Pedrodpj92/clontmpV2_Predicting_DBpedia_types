@@ -10,7 +10,7 @@ The approach 2 was named *multilevel* because we have models
 for each ontology class level. For this approach we used only one training method:
 C5.0, an improved version of C4.5.
 
-<img src="http://es-ta.linkeddata.es/app2training.png_v2" width="1200">
+<img src="http://es-ta.linkeddata.es/app2training_v2.png" width="1200">
 
 # Functions
 The purpose of this section is only clarify develop details.
@@ -37,7 +37,7 @@ This function calls C5.0 library to train a decision tree using C5.0 model for a
 ### Input expected:
 * Training files
 * Validating files
-## Output expected:
+### Output expected:
 * ttl file with predictions done, which resources are found in validation dataset.
 
 ## app2_DL 
@@ -62,7 +62,7 @@ This function calls H2O API functions to train a Deep Learning (multi-layer feed
 ### Input expected:
 * Training files
 * Validating files
-## Output expected:
+### Output expected:
 * ttl file with predictions done, which resources are found in validation dataset.
 
 
@@ -88,6 +88,6 @@ This function calls H2O API functions to train a Random Forest model for approac
 ### Input expected:
 * Training files
 * Validating files
-## Output expected:
+### Output expected:
 * ttl file with predictions done, which resources are found in validation dataset.
 
