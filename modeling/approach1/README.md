@@ -21,7 +21,7 @@ The purpose of this section is only clarify develop details.
 ### Description:
 This function calls H2O API functions to train a Naïve Bayes model for approach 1.
 ### Function variables:
-* semilla
+* randomSeed
 * pathInput
 * pathOutput
 * pathOutputModel
@@ -33,12 +33,13 @@ This function calls H2O API functions to train a Naïve Bayes model for approach
 * Validating file
 ### Output expected:
 * ttl file with predictions done, which resources are found in validation dataset.
+* trained model.
 
 ## app1_dl 
 ### Description:
 This function calls H2O API functions to train a Deep Learning (multi-layer feedforward) model for approach 1.
 ### Function variables:
-* semilla
+* randomSeed
 * pathInput
 * pathOutput
 * pathOutputModel
@@ -50,12 +51,13 @@ This function calls H2O API functions to train a Deep Learning (multi-layer feed
 * Validating file
 ### Output expected:
 * ttl file with predictions done, which resources are found in validation dataset for approach 1.
+* trained model.
 
 ## app1_rf 
 ### Description:
 This function calls H2O API functions to train a Random Forest model dataset for approach 1.
 ### Function variables:
-* semilla
+* randomSeed
 * pathInput
 * pathOutput
 * pathOutputModel
@@ -67,4 +69,5 @@ This function calls H2O API functions to train a Random Forest model dataset for
 * Validating file
 ### Output expected:
 * ttl file with predictions done, which resources are found in validation dataset.
+* trained model.
 

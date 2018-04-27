@@ -11,7 +11,7 @@ Divide input dataset into training dataset and validating dataset. Validation ca
 * path_files_trainValidate_Out
 * n_cases_validating
 * test1_10_25
-* semilla
+* randomSeed
 * isApproach1
 * tr_l2
 * vl_l2
@@ -23,7 +23,7 @@ Divide input dataset into training dataset and validating dataset. Validation ca
 * vl_l5
 * tr_l6
 * vl_l6
-* reservados
+* reserved
 ### Input expected:
 * learning dataset
 ### Output expected:
@@ -41,7 +41,7 @@ Divide input dataset in N folds to do a cross-validation process on modeling mod
 * file_training_Out
 * file_validating_Out
 * nSplits
-* semilla
+* randomSeed
 * isApproach1
 * tr_l2
 * vl_l2
@@ -53,14 +53,14 @@ Divide input dataset in N folds to do a cross-validation process on modeling mod
 * vl_l5
 * tr_l6
 * vl_l6
-* reservados
+* reserved
 ### Input expected:
 * learning dataset
 ## Output expected:
 * N folds
 * N training main dataset, one in each fold
 * N validating main dataset, one in each fold
-* N validating dataset file in ttl format, one in each fold. Similar to divede_oneSplit function
+* N validating dataset file in ttl format, one in each fold. Similar to divide_oneSplit function
 
 ## divide_knownResources_Ln
 ### Description:

@@ -16,7 +16,7 @@ This function calls the specific model function from the main workflow.
 ### Function variables:
 * approachSelected
 * algorithmSelected
-* semilla
+* randomSeed
 * isCrossValidation
 * nSplits
 * ontology
