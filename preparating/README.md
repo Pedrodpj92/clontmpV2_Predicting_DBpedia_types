@@ -27,7 +27,7 @@ This function transforms input properties and types files. The goal is that inte
 * path_files_trainValidate_Out
 * file_training_Out
 * file_validating_Out
-* semilla
+* randomSeed
 * nSplits
 * n_cases_validating
 * test1_10_25
@@ -41,7 +41,7 @@ This function transforms input properties and types files. The goal is that inte
 * vl_l5
 * tr_l6
 * vl_l6
-* reservados
+* reserved
 ### Input:
 * Properties file in turtle format. Commonly mapping_based_properties or mapping_based_objects in DBpedia
 * Types file in turtle format. Commonly instance_types in DBpedia
