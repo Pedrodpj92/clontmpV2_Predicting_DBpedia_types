@@ -14,8 +14,8 @@ The purpose of this section is only clarify develop details.
 ### Description:
 This function calls evalua_completo as a wrapper, in order to keep similar structure module as preparating and modeling.
 ### Function variables:
-* pathDT_Generado
-* pathDT_Reservado
+* pathDT_Generated
+* pathDT_Reserved
 * pathNiveles
 * pathSalida
 ### Input expected:
@@ -32,8 +32,8 @@ This function calls evalua_completo as a wrapper, in order to keep similar struc
 ### Description:
 This function calculates precision, recall and f-measure  with general and average per resource measurement criteria
 ### Function variables:
-* pathDT_Generado
-* pathDT_Reservado
+* pathDT_Generated
+* pathDT_Reserved
 ### Input expected:
 * file with ttl extension which contains resources with type predictions.
 * file with ttl extension which contains resources with original types in order to compare predictions.
@@ -48,9 +48,9 @@ This function calculates precision, recall and f-measure  with general and avera
 ### Description:
 This function calculates precision, recall and f-measure with leaves measurement criteria
 ### Function variables:
-* pathDT_Generado
-* pathDT_Reservado
-* pathNiveles
+* pathDT_Generated
+* pathDT_Reserved
+* pathlevels
 ### Input expected:
 * file with ttl extension which contains resources with type predictions.
 * file with ttl extension which contains resources with original types in order to compare predictions.
@@ -65,9 +65,9 @@ This function calculates precision, recall and f-measure with leaves measurement
 ### Description:
 This function calculates precision, recall and f-measure with level N measurement criteria
 ### Function variables:
-* pathDT_Generado
-* pathDT_Reservado
-* pathNiveles
+* pathDT_Generated
+* pathDT_Reserved
+* pathlevels
 ### Input expected:
 * file with ttl extension which contains resources with type predictions.
 * file with ttl extension which contains resources with original types in order to compare predictions.
@@ -82,10 +82,10 @@ This function calculates precision, recall and f-measure with level N measuremen
 ### Description:
 This function calls the three last ones explained before and generates one data frame with all metrics and measurement criteria joined.
 ### Function variables:
-* pathDT_Generado
-* pathDT_Reservado
-* pathNiveles
-* pathSalida
+* pathDT_Generated
+* pathDT_Reserved
+* pathLevelsCompleted
+* pathOutput
 ### Input expected:
 * file with ttl extension which contains resources with type predictions.
 * file with ttl extension which contains resources with original types in order to compare predictions.
@@ -95,7 +95,7 @@ This function calls the three last ones explained before and generates one data 
 ### Return value:
 * Data frame with metrics
 
-## calcula_media_matrices
+## calculate_mean_matrix
 ### Description:
 Auxiliary function. Calculates the mean of a data frame list where each element is a return value obtained in evalua_completo function. This function is not currently on workflow, but it can be useful to keep here to future.
 ### Function variables:
@@ -107,7 +107,7 @@ Auxiliary function. Calculates the mean of a data frame list where each element 
 ### Return value:
 * Data frame with metrics
 
-## calcula_sd_matrices
+## calculate_sd_matrix
 ### Description:
 Auxiliary function. Calculates the standard deviation of a data frame list where each element is a return value obtained in evalua_completo function. This function is not currently on workflow, but it can be useful to keep here to future.
 ### Function variables:
