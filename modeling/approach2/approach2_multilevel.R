@@ -3,7 +3,7 @@
 
 
 
-app2_C50 <- function(semilla, pathInput, pathOutput, pathOutputModel, nameOutputFile,
+app2_C50 <- function(randomSeed, pathInput, pathOutput, pathOutputModel, nameOutputFile,
                      tr, vl, tr_l2, vl_l2, tr_l3, vl_l3, tr_l4, vl_l4, tr_l5, vl_l5){
   
   
@@ -197,7 +197,7 @@ app2_C50 <- function(semilla, pathInput, pathOutput, pathOutputModel, nameOutput
 }
 
 
-app2_DL <- function(semilla, pathInput, pathOutput, pathOutputModel, nameOutputFile,
+app2_DL <- function(randomSeed, pathInput, pathOutput, pathOutputModel, nameOutputFile,
                     tr, vl, tr_l2, vl_l2, tr_l3, vl_l3, tr_l4, vl_l4, tr_l5, vl_l5){
   
   library(h2o)
@@ -239,7 +239,7 @@ app2_DL <- function(semilla, pathInput, pathOutput, pathOutputModel, nameOutputF
     x=2:(ncol(train)-11),
     y=(ncol(train)-10),
     stopping_rounds = 0,
-    seed = semilla)
+    seed = randomSeed)
   h2o.saveModel(dl_n1, path=pathOutputModel)
 
   # h2o.init(
@@ -254,7 +254,7 @@ app2_DL <- function(semilla, pathInput, pathOutput, pathOutputModel, nameOutputF
     x=2:(ncol(train)-11),
     y=(ncol(train)-8),
     stopping_rounds = 0,
-    seed = semilla)
+    seed = randomSeed)
   #summary(dl_n2_m1)
   h2o.saveModel(dl_n2_m1, path=pathOutputModel)
 
@@ -269,7 +269,7 @@ app2_DL <- function(semilla, pathInput, pathOutput, pathOutputModel, nameOutputF
     x=2:(ncol(train_sinDesc_N2)-11),
     y=(ncol(train_sinDesc_N2)-9),
     stopping_rounds = 0,
-    seed = semilla)
+    seed = randomSeed)
   #summary(dl_n2_m4)
   h2o.saveModel(dl_n2_m4, path=pathOutputModel)
 
@@ -285,7 +285,7 @@ app2_DL <- function(semilla, pathInput, pathOutput, pathOutputModel, nameOutputF
     x=2:(ncol(train)-11),
     y=(ncol(train)-6),
     stopping_rounds = 0,
-    seed = semilla)
+    seed = randomSeed)
   #summary(dl_n3_m1)
   h2o.saveModel(dl_n3_m1, path=pathOutputModel)
 
@@ -300,7 +300,7 @@ app2_DL <- function(semilla, pathInput, pathOutput, pathOutputModel, nameOutputF
     x=2:(ncol(train_sinDesc_N3)-11),
     y=(ncol(train_sinDesc_N3)-7),
     stopping_rounds = 0,
-    seed = semilla)
+    seed = randomSeed)
   #summary(dl_n3_m4)
   h2o.saveModel(dl_n3_m4, path=pathOutputModel)
 
@@ -317,7 +317,7 @@ app2_DL <- function(semilla, pathInput, pathOutput, pathOutputModel, nameOutputF
     x=2:(ncol(train)-11),
     y=(ncol(train)-4),
     stopping_rounds = 0,
-    seed = semilla)
+    seed = randomSeed)
   #summary(dl_n4_m1)
   h2o.saveModel(dl_n4_m1, path=pathOutputModel)
   
@@ -332,7 +332,7 @@ app2_DL <- function(semilla, pathInput, pathOutput, pathOutputModel, nameOutputF
     x=2:(ncol(train_sinDesc_N4)-11),
     y=(ncol(train_sinDesc_N4)-5),
     stopping_rounds = 0,
-    seed = semilla)
+    seed = randomSeed)
   #summary(dl_n4_m4)
   h2o.saveModel(dl_n4_m4, path=pathOutputModel)
   
@@ -349,7 +349,7 @@ app2_DL <- function(semilla, pathInput, pathOutput, pathOutputModel, nameOutputF
     x=2:(ncol(train)-11),
     y=(ncol(train)-2),
     stopping_rounds = 0,
-    seed = semilla)
+    seed = randomSeed)
   #summary(dl_n5_m1)
   h2o.saveModel(dl_n5_m1, path=pathOutputModel)
   
@@ -364,7 +364,7 @@ app2_DL <- function(semilla, pathInput, pathOutput, pathOutputModel, nameOutputF
     x=2:(ncol(train_sinDesc_N5)-11),
     y=(ncol(train_sinDesc_N5)-3),
     stopping_rounds = 0,
-    seed = semilla)
+    seed = randomSeed)
   #summary(dl_n5_m4)
   h2o.saveModel(dl_n5_m4, path=pathOutputModel)
   
@@ -436,7 +436,7 @@ app2_DL <- function(semilla, pathInput, pathOutput, pathOutputModel, nameOutputF
 
 
 
-app2_RF <- function(semilla, pathInput, pathOutput, pathOutputModel,  nameOutputFile,
+app2_RF <- function(randomSeed, pathInput, pathOutput, pathOutputModel,  nameOutputFile,
                     tr, vl, tr_l2, vl_l2, tr_l3, vl_l3, tr_l4, vl_l4, tr_l5, vl_l5){
   
   library(h2o)
@@ -481,7 +481,7 @@ app2_RF <- function(semilla, pathInput, pathOutput, pathOutputModel,  nameOutput
     max_depth = 120,
     stopping_rounds = 3,
     score_each_iteration = T,
-    seed = semilla)
+    seed = randomSeed)
   h2o.saveModel(rf_n1, path=pathOutputModel)
 
   # h2o.init(
@@ -499,7 +499,7 @@ app2_RF <- function(semilla, pathInput, pathOutput, pathOutputModel,  nameOutput
     max_depth = 120,
     stopping_rounds = 3,
     score_each_iteration = T,
-    seed = semilla)
+    seed = randomSeed)
   #summary(rf_n2_m1)
   h2o.saveModel(rf_n2_m1, path=pathOutputModel)
 
@@ -517,7 +517,7 @@ app2_RF <- function(semilla, pathInput, pathOutput, pathOutputModel,  nameOutput
     max_depth = 120,
     stopping_rounds = 3,
     score_each_iteration = T,
-    seed = semilla)
+    seed = randomSeed)
   #summary(rf_n2_m4)
   h2o.saveModel(rf_n2_m4, path=pathOutputModel)
 
@@ -536,7 +536,7 @@ app2_RF <- function(semilla, pathInput, pathOutput, pathOutputModel,  nameOutput
     max_depth = 120,
     stopping_rounds = 3,
     score_each_iteration = T,
-    seed = semilla)
+    seed = randomSeed)
   #summary(rf_n3_m1)
   h2o.saveModel(rf_n3_m1, path=pathOutputModel)
   
@@ -554,7 +554,7 @@ app2_RF <- function(semilla, pathInput, pathOutput, pathOutputModel,  nameOutput
     max_depth = 120,
     stopping_rounds = 3,
     score_each_iteration = T,
-    seed = semilla)
+    seed = randomSeed)
   #summary(rf_n3_m4)
   h2o.saveModel(rf_n3_m4, path=pathOutputModel)
   
@@ -573,7 +573,7 @@ app2_RF <- function(semilla, pathInput, pathOutput, pathOutputModel,  nameOutput
     max_depth = 120,
     stopping_rounds = 3,
     score_each_iteration = T,
-    seed = semilla)
+    seed = randomSeed)
   #summary(rf_n4_m1)
   h2o.saveModel(rf_n4_m1, path=pathOutputModel)
   
@@ -591,7 +591,7 @@ app2_RF <- function(semilla, pathInput, pathOutput, pathOutputModel,  nameOutput
     max_depth = 120,
     stopping_rounds = 3,
     score_each_iteration = T,
-    seed = semilla)
+    seed = randomSeed)
   #summary(rf_n4_m4)
   h2o.saveModel(rf_n4_m4, path=pathOutputModel)
   
@@ -611,7 +611,7 @@ app2_RF <- function(semilla, pathInput, pathOutput, pathOutputModel,  nameOutput
     max_depth = 120,
     stopping_rounds = 3,
     score_each_iteration = T,
-    seed = semilla)
+    seed = randomSeed)
   #summary(rf_n5_m1)
   h2o.saveModel(rf_n5_m1, path=pathOutputModel)
   
@@ -629,7 +629,7 @@ app2_RF <- function(semilla, pathInput, pathOutput, pathOutputModel,  nameOutput
     max_depth = 120,
     stopping_rounds = 3,
     score_each_iteration = T,
-    seed = semilla)
+    seed = randomSeed)
   #summary(rf_n5_m4)
   h2o.saveModel(rf_n5_m4, path=pathOutputModel)
   

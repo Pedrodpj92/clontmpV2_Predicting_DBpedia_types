@@ -8,9 +8,9 @@ divide_oneSplit <- function(file_learningSet_In,
                             path_files_trainValidate_Out,
                             n_cases_validating,
                             test1_10_25,
-                            semilla,
+                            randomSeed,
                             isApproach1,
-                            tr_l2, vl_l2, tr_l3, vl_l3, tr_l4, vl_l4, tr_l5, vl_l5, tr_l6, vl_l6, reservados){
+                            tr_l2, vl_l2, tr_l3, vl_l3, tr_l4, vl_l4, tr_l5, vl_l5, tr_l6, vl_l6, reserved){
   
   df_learningSet <- read.csv(file=file_learningSet_In,
                              header=FALSE, sep=",", encoding = "UTF-8", stringsAsFactors = FALSE)
@@ -31,7 +31,7 @@ divide_oneSplit <- function(file_learningSet_In,
   countingIngoing_test <- countingIngoing[countingIngoing$numberOfIngoing>=test1_10_25,]
   
   
-  set.seed(as.numeric(semilla))
+  set.seed(as.numeric(randomSeed))
   
   countingIngoing_testSelection <- countingIngoing_test[sample(x = nrow(countingIngoing_test), size = n_cases_validating, replace = FALSE),]
   
@@ -41,7 +41,7 @@ divide_oneSplit <- function(file_learningSet_In,
   write.csv(df_training, file = paste(path_files_trainValidate_Out,file_training_Out,sep=""), fileEncoding = "UTF-8", row.names=FALSE)
   write.csv(df_validating, file = paste(path_files_trainValidate_Out,file_validating_Out,sep=""), fileEncoding = "UTF-8", row.names=FALSE)
   getting_types_tottl(file_dataSet_In = paste(path_files_trainValidate_Out,file_validating_Out,sep=""),
-                      file_Out = paste(path_files_trainValidate_Out,reservados,sep=""),
+                      file_Out = paste(path_files_trainValidate_Out,reserved,sep=""),
                       isApproach1 = isApproach1)
   # print("llego aqui 10")
   if(!isApproach1){
@@ -68,9 +68,9 @@ divide_nSplit <- function(file_learningSet_In,
                           file_training_Out,
                           file_validating_Out,
                           nSplits,
-                          semilla,
+                          randomSeed,
                           isApproach1,
-                          tr_l2, vl_l2, tr_l3, vl_l3, tr_l4, vl_l4, tr_l5, vl_l5, tr_l6, vl_l6, reservados){
+                          tr_l2, vl_l2, tr_l3, vl_l3, tr_l4, vl_l4, tr_l5, vl_l5, tr_l6, vl_l6, reserved){
   
   df_learningSet <- read.csv(file=file_learningSet_In,
                              header=FALSE, sep=",", encoding = "UTF-8", stringsAsFactors = FALSE)
@@ -83,7 +83,7 @@ divide_nSplit <- function(file_learningSet_In,
   }
 
   nSplits <- as.numeric(nSplits)  
-  semilla <- as.numeric(semilla)
+  randomSeed <- as.numeric(randomSeed)
 
   nrow_fold <- nrow(df_learningSet)/nSplits
   nrow_fold <- round(nrow_fold,digits = 0)
@@ -91,7 +91,7 @@ divide_nSplit <- function(file_learningSet_In,
   
   #last operation is slight different
   for(i in 1:(nSplits-1)){
-    set.seed(semilla)
+    set.seed(randomSeed)
     fold <- restante[sample(x = nrow(restante), size = nrow_fold, replace = FALSE),]
     dt_training <- df_learningSet[!(df_learningSet$s %in% fold$s),]
     restante <- restante[!(restante$s %in% fold$s),]
@@ -105,7 +105,7 @@ divide_nSplit <- function(file_learningSet_In,
                              f_l5 = paste(path_splits_Out,"fold",i,"/",vl_l5,sep=""),
                              f_l6 = paste(path_splits_Out,"fold",i,"/",vl_l6,sep=""))
     getting_types_tottl(file_dataSet_In = paste(path_splits_Out,"fold",i,"/",file_validating_Out,sep=""),
-                        file_Out = paste(path_splits_Out,"fold",i,"/",reservados,sep=""),
+                        file_Out = paste(path_splits_Out,"fold",i,"/",reserved,sep=""),
                         isApproach1 = isApproach1)
     write.csv(dt_training, file = paste(path_splits_Out,"fold",i,"/",file_training_Out,sep=""),
               fileEncoding = "UTF-8", row.names=FALSE)
@@ -128,7 +128,7 @@ divide_nSplit <- function(file_learningSet_In,
                            f_l5 = paste(path_splits_Out,"fold",nSplits,"/",vl_l5,sep=""),
                            f_l6 = paste(path_splits_Out,"fold",nSplits,"/",vl_l6,sep=""))
   getting_types_tottl(file_dataSet_In = paste(path_splits_Out,"fold",nSplits,"/",file_validating_Out,sep=""),
-                      file_Out = paste(path_splits_Out,"fold",nSplits,"/",reservados,sep=""),
+                      file_Out = paste(path_splits_Out,"fold",nSplits,"/",reserved,sep=""),
                       isApproach1 = isApproach1)
   dt_training <- df_learningSet[!(df_learningSet$s %in% fold$s),]
   write.csv(dt_training, file = paste(path_splits_Out,"fold",nSplits,"/",file_training_Out,sep=""),

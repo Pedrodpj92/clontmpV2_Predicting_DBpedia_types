@@ -13,7 +13,7 @@ source(paste(getwd(),"/evaluating/module_evaluating.R",sep=""))
 
 option_list <- list(
   make_option(c("-a", "--approach"), type="character", default=NULL, 
-              help="approach selected. <global_ap1 | multilevel_ap2 | cascade_ap3>
+              help="approach selected. <global_ap1 | multilevel_ap2 | cascade_ap3>.
               global_ap1     - First approach, it learns from most specific type from each resource
               multilevel_ap2 - Second approach, Local Classifiers per Level with binary decisions per level aimed to solve partial depth issue
               cascade_ap3    - Third approach, Local Classifiers per Level with binary decisions per level and cascade process aimed to solve partial depth issue and reduce hierarchy inconcistencies",
@@ -26,13 +26,13 @@ option_list <- list(
               RF   - Random Forest",
               metavar="character"),
   make_option(c("-c","--cross_validation", type="logical", default = NULL),
-              help="notify if divide process should be a simple split (train/test) or should be a cross_validation. <TRUE | FALSE>",
+              help="decide whether the divide process should be a simple split (train/test) or should be a cross_validation. <TRUE | FALSE>",
               metavar="logical"),
   make_option(c("-t","--test_ingoingCondition", type="integer", default = NULL),
               help="minimum amount of properties per resource reserved for tests. Only available on simple split (-c FALSE)",
               metavar="integer"),
   make_option(c("-n","--number_casesOrFolds", type="integer", default = NULL),
-              help="Points out the number of cases or the folds used depending on -cv condition option",
+              help="the number of cases or the folds used depending on -c condition option",
               metavar = "integer"),
   make_option(c("-d","--domain", type="character", default = NULL),
               help="how starts URI's DBpedia resources. <EN | ES>",
@@ -44,7 +44,7 @@ option_list <- list(
               help="path to input mapping_based_properties.ttl. In modern DBpedia versions it may be mapping_based_objects.ttl, it works well so.",
               metavar="character"),
   make_option(c("-i","--instance_types", type="character", default = NULL),
-              help="path to input instance_types.ttl In modern DBpedia versions it may be splitted in 2 files, transitive and 'ending' (leves) types.
+              help="path to input instance_types.ttl In modern DBpedia versions it may be splitted in 2 files, transitive and 'ending' (leaves) types.
               This main program assumes that types file are completed, so in case of divided files, should be merged previously",
               metavar="character"),
   make_option(c("-o", "--pathOut"), type="character", default = NULL,
@@ -57,21 +57,19 @@ option_list <- list(
               help="random number generator seed for algorithms that are dependent on randomization [default= %default]",
               metavar = "integer"),
   make_option(c("-x","--executionMode"), type="character", default = NULL,
-              help="this main is divided in 3 modules: preprocesing, modeling, evaluating (predicting). Flag -x or --executionMode specify where should start this main script. 
-			  This is useful, for instance, to generate the same train/validation data one time and execute several approaches and/or algorithms. <P_M_E | M_E | E>",
+              help="this main is divided in 3 modules: preprocesing, modeling, evaluating (predicting). Flag -x or --executionMode specify where this main script should start. This is useful, for instance, to generate the same train/validation data once and execute several approaches and/or algorithms. <P_M_E | M_E | E>",
               metavar = "character")
 )
 
 
 opt_parser <- OptionParser(usage = "Usage: %prog <options>",
                            description = "Description:
-                           This software provides a complete Data Mining workflow in order to infer new DBpedia types on resources which are found in range triples positions (as objects).
-                            See 'Inferring New Types on Large Datasets Applying Ontology Class Hierarchy Classifiers: The DBpedia Case' (under revision in )
+                           This software provides a complete Data Mining workflow for inferring new DBpedia types on resources which are found as objects.
                            ",
                            epilogue = "Examples:
                              ./main_predicting_DBpedia_types_P_M_E.R -a global_ap1 -l DL -c FALSE -t 1 -n 2500 -d ES -v 201610 -m ~/inputData/mappingbased_objects_uncleaned_es.ttl -i ~/inputData/instance_types_completo_es.ttl -o ~/outputData/ -f ejecucion1_app1_DL_test1 -s 1234 -x P_M_E
                             
-                            In this case, The program will use first approach (global) with a deep learning algoritm, with one train/validate split where 2500 validation cases have at least 1 ingoing property. This case is used on EsDBpedia with 2016-10 version ontology. After that, in command example can be see both input data (properties and types) followed by output path, and files identifier. All process will use '1234' as random seed. At -x option will indicate a full workflow (preprocesing, modelating and evaluating)
+                            In this case, The program will use first approach (global) with a deep learning algoritm, with one train/validate split where 2500 validation cases have at least 1 ingoing property. This case is used on EsDBpedia with the 2016-10 ontology. After that, we specify both input data (properties and types) followed by output path, and files identifier. All processes will use '1234' as random seed. The -x option will indicate a full workflow (preprocesing, modeling and evaluating)
                            ",
                            option_list=option_list)
 
@@ -181,37 +179,37 @@ if(opt$approach %in% c("global_ap1")){
 
 
 if(opt$executionMode %in% c("P_M_E")){
-  preprocesa(file_mapping_based_properties_In = opt$mapping_based_properties,
-             file_instance_types_In = opt$instance_types,
-             domain_resources = dominio,
-             path_levels = paste(getwd(),"/levels_ontology/",ontologia,"/",sep=""),
-             isCrossValidation = as.logical(opt$cross_validation),
-             isApproach1 = isApproach1,
-             path_splits_Out = paste(getwd(),"/intermediateData/",sep=""),
-             path_files_trainValidate_Out = paste(getwd(),"/intermediateData/",sep=""),
-             file_training_Out = "trainingTest.csv",
-             file_validating_Out = "validatingTest.csv",
-             semilla = opt$seed,
-             nSplits = opt$number_casesOrFolds,
-             n_cases_validating = opt$number_casesOrFolds,
-             test1_10_25 = opt$test_ingoingCondition,
-             tr_l2 = "trainingTest_knownResources_L2.csv", #Al tratarse de archivos intermedios se puede dejar así, aunque estaría bien mejorar esta parte
-             vl_l2 = "validatingTest_knownResources_L2.csv",
-             tr_l3 = "trainingTest_knownResources_L3.csv",
-             vl_l3 = "validatingTest_knownResources_L3.csv",
-             tr_l4 = "trainingTest_knownResources_L4.csv",
-             vl_l4 = "validatingTest_knownResources_L4.csv",
-             tr_l5 = "trainingTest_knownResources_L5.csv",
-             vl_l5 = "validatingTest_knownResources_L5.csv",
-             tr_l6 = "trainingTest_knownResources_L6.csv",
-             vl_l6 = "validatingTest_knownResources_L6.csv",
-             reservados = "reserva.ttl")
+  preprocessing(file_mapping_based_properties_In = opt$mapping_based_properties,
+                file_instance_types_In = opt$instance_types,
+                domain_resources = dominio,
+                path_levels = paste(getwd(),"/levels_ontology/",ontologia,"/",sep=""),
+                isCrossValidation = as.logical(opt$cross_validation),
+                isApproach1 = isApproach1,
+                path_splits_Out = paste(getwd(),"/intermediateData/",sep=""),
+                path_files_trainValidate_Out = paste(getwd(),"/intermediateData/",sep=""),
+                file_training_Out = "trainingTest.csv",
+                file_validating_Out = "validatingTest.csv",
+                randomSeed = opt$seed,
+                nSplits = opt$number_casesOrFolds,
+                n_cases_validating = opt$number_casesOrFolds,
+                test1_10_25 = opt$test_ingoingCondition,
+                tr_l2 = "trainingTest_knownResources_L2.csv", #Al tratarse de archivos intermedios se puede dejar así, aunque estaría bien mejorar esta parte
+                vl_l2 = "validatingTest_knownResources_L2.csv",
+                tr_l3 = "trainingTest_knownResources_L3.csv",
+                vl_l3 = "validatingTest_knownResources_L3.csv",
+                tr_l4 = "trainingTest_knownResources_L4.csv",
+                vl_l4 = "validatingTest_knownResources_L4.csv",
+                tr_l5 = "trainingTest_knownResources_L5.csv",
+                vl_l5 = "validatingTest_knownResources_L5.csv",
+                tr_l6 = "trainingTest_knownResources_L6.csv",
+                vl_l6 = "validatingTest_knownResources_L6.csv",
+                reserved = "reserva.ttl")
   
   if(isApproach1){
-
-
-
-
+    
+    
+    
+    
     system(command = paste("java -jar ",
                            getwd(),"/levels_ontology/dbotypes.jar ",
                            getwd(),"/levels_ontology/",ontologia_owl,
@@ -233,28 +231,28 @@ if(opt$executionMode %in% c("P_M_E")){
 
 
 if(opt$executionMode %in% c("P_M_E","M_E")){
-  modela(approachSelected = opt$approach,
-         algorithmSelected = opt$algorithm,
-         semilla = opt$seed,
-         isCrossValidation = as.logical(opt$cross_validation),
-         nSplits = opt$number_casesOrFolds,
-         ontology = ontologia_owl,
-         pathInput = paste(getwd(),"/intermediateData/",sep=""),
-         pathOutput = opt$pathOut,
-         pathOutputModel = opt$pathOut,
-         nameOutputFile = opt$fileOut,
-         tr = "trainingTest.csv",
-         vl = "validatingTest.csv",
-         tr_l2 = "trainingTest_knownResources_L2.csv",
-         vl_l2 = "validatingTest_knownResources_L2.csv",
-         tr_l3 = "trainingTest_knownResources_L3.csv",
-         vl_l3 = "validatingTest_knownResources_L3.csv",
-         tr_l4 = "trainingTest_knownResources_L4.csv",
-         vl_l4 = "validatingTest_knownResources_L4.csv",
-         tr_l5 = "trainingTest_knownResources_L5.csv",
-         vl_l5 = "validatingTest_knownResources_L5.csv",
-         tr_l6 = "trainingTest_knownResources_L6.csv",
-         vl_l6 = "validatingTest_knownResources_L6.csv")
+  modeling(approachSelected = opt$approach,
+           algorithmSelected = opt$algorithm,
+           randomSeed = opt$seed,
+           isCrossValidation = as.logical(opt$cross_validation),
+           nSplits = opt$number_casesOrFolds,
+           ontology = ontologia_owl,
+           pathInput = paste(getwd(),"/intermediateData/",sep=""),
+           pathOutput = opt$pathOut,
+           pathOutputModel = opt$pathOut,
+           nameOutputFile = opt$fileOut,
+           tr = "trainingTest.csv",
+           vl = "validatingTest.csv",
+           tr_l2 = "trainingTest_knownResources_L2.csv",
+           vl_l2 = "validatingTest_knownResources_L2.csv",
+           tr_l3 = "trainingTest_knownResources_L3.csv",
+           vl_l3 = "validatingTest_knownResources_L3.csv",
+           tr_l4 = "trainingTest_knownResources_L4.csv",
+           vl_l4 = "validatingTest_knownResources_L4.csv",
+           tr_l5 = "trainingTest_knownResources_L5.csv",
+           vl_l5 = "validatingTest_knownResources_L5.csv",
+           tr_l6 = "trainingTest_knownResources_L6.csv",
+           vl_l6 = "validatingTest_knownResources_L6.csv")
 }
 
 # #TO-DO: función que coja de entrada la carpeta con los modelos y un conjunto de datos y realice predicciones
@@ -265,32 +263,15 @@ if(opt$executionMode %in% c("P_M_E","M_E")){
 
 if(as.logical(opt$cross_validation)){
   for(i in 1:as.numeric(opt$number_casesOrFolds)){
-    evalua(pathDT_GeneradoCompleto = paste(opt$pathOut,"fold",i,"/",opt$fileOut,".ttl",sep=""),
-           pathDT_ReservadoCompleto = paste(getwd(),"/intermediateData/","fold",i,"/","reserva.ttl",sep=""),
-           pathNivelesCompleto = paste(getwd(),"/levels_ontology/",ontologia,"/",sep=""),
-           pathSalida = paste(opt$pathOut,"fold",i,"/","evaluacion_",opt$fileOut,".csv",sep=""))
+    evaluating(pathDT_GeneratedCompleted = paste(opt$pathOut,"fold",i,"/",opt$fileOut,".ttl",sep=""),
+               pathDT_ReservedCompleted = paste(getwd(),"/intermediateData/","fold",i,"/","reserva.ttl",sep=""),
+               pathLevelsCompleted = paste(getwd(),"/levels_ontology/",ontologia,"/",sep=""),
+               pathOutput = paste(opt$pathOut,"fold",i,"/","evaluacion_",opt$fileOut,".csv",sep=""))
   }
 }else{
-  
-  # if(isApproach1){
-  #   
-  # 
-  #   
-  #   
-  #   system(command = paste("java -jar ",
-  #                          getwd(),"/levels_ontology/dbotypes.jar ",
-  #                          getwd(),"/levels_ontology/",ontologia_owl,
-  #                          " ",
-  #                          paste(getwd(),"/intermediateData/reserva.ttl",sep=""),
-  #                          sep=""))
-  #   system(command = paste("mv ",
-  #                          paste(getwd(),"/intermediateData/reserva.ttl.extended.csv",sep=""),
-  #                          " ",
-  #                          paste(getwd(),"/intermediateData/reserva.ttl",sep=""),sep=""))
-  # }
-  evalua(pathDT_GeneradoCompleto = paste(opt$pathOut,opt$fileOut,".ttl",sep=""),
-         pathDT_ReservadoCompleto = paste(getwd(),"/intermediateData/reserva.ttl",sep=""),
-         pathNivelesCompleto = paste(getwd(),"/levels_ontology/",ontologia,"/",sep=""),
-         pathSalida = paste(opt$pathOut,"evaluacion_",opt$fileOut,".csv",sep=""))
+  evaluating(pathDT_GeneratedCompleted = paste(opt$pathOut,opt$fileOut,".ttl",sep=""),
+             pathDT_ReservedCompleted = paste(getwd(),"/intermediateData/reserva.ttl",sep=""),
+             pathLevelsCompleted = paste(getwd(),"/levels_ontology/",ontologia,"/",sep=""),
+             pathOutput = paste(opt$pathOut,"evaluacion_",opt$fileOut,".csv",sep=""))
 }
 

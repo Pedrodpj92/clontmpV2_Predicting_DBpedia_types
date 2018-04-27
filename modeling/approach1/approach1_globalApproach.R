@@ -3,7 +3,7 @@
 
 
 
-app1_nb <- function(semilla, pathInput, pathOutput, pathOutputModel, nameOutputFile,
+app1_nb <- function(randomSeed, pathInput, pathOutput, pathOutputModel, nameOutputFile,
                     tr, vl){
   library(h2o)
   h2o.init(
@@ -31,7 +31,7 @@ app1_nb <- function(semilla, pathInput, pathOutput, pathOutputModel, nameOutputF
     validation_frame=valid_test[,2:ncol(valid_test)],
     x=2:(ncol(train_test)-1),
     y=ncol(train_test),
-    seed = semilla)
+    seed = randomSeed)
   h2o.saveModel(nb_global_Approach1_test, path=pathOutputModel)
   
   
@@ -52,7 +52,7 @@ app1_nb <- function(semilla, pathInput, pathOutput, pathOutputModel, nameOutputF
 
 
 
-app1_dl <- function(semilla, pathInput, pathOutput, pathOutputModel, nameOutputFile,
+app1_dl <- function(randomSeed, pathInput, pathOutput, pathOutputModel, nameOutputFile,
                     tr, vl){
   library(h2o)
   h2o.init(
@@ -80,7 +80,7 @@ app1_dl <- function(semilla, pathInput, pathOutput, pathOutputModel, nameOutputF
     x=2:(ncol(train_test)-1),
     y=ncol(train_test),
     stopping_rounds = 0,
-    seed = semilla)
+    seed = randomSeed)
   h2o.saveModel(dl_global_Approach1_test, path=pathOutputModel)
   
   test <- h2o.predict(object = dl_global_Approach1_test, newdata = valid_test[,2:(ncol(valid_test)-1)])[1]
@@ -98,7 +98,7 @@ app1_dl <- function(semilla, pathInput, pathOutput, pathOutputModel, nameOutputF
 }
 
 
-app1_rf <- function(semilla, pathInput, pathOutput, pathOutputModel, nameOutputFile,
+app1_rf <- function(randomSeed, pathInput, pathOutput, pathOutputModel, nameOutputFile,
                     tr, vl){
   library(h2o)
   h2o.init(
@@ -129,7 +129,7 @@ app1_rf <- function(semilla, pathInput, pathOutput, pathOutputModel, nameOutputF
     max_depth = 120,
     stopping_rounds = 3,
     score_each_iteration = T,
-    seed = semilla)
+    seed = randomSeed)
   h2o.saveModel(rf_global_Approach1_test, path=pathOutputModel)
   
   test <- h2o.predict(object = rf_global_Approach1_test, newdata = valid_test[,2:(ncol(valid_test)-1)])[1]

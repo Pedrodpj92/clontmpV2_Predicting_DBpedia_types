@@ -11,21 +11,21 @@ source(paste(getwd(),"/modeling/approach1/approach1_globalApproach.R",sep=""))
 source(paste(getwd(),"/modeling/approach2/approach2_multilevel.R",sep=""))
 source(paste(getwd(),"/modeling/approach3/approach3_multilevel_onCascade.R",sep=""))
 
-modela <- function(approachSelected,
-                   algorithmSelected,
-                   semilla,
-                   isCrossValidation,
-                   nSplits, #only if isCrossValidation == TRUE
-                   ontology,
-                   pathInput,
-                   pathOutput,
-                   pathOutputModel,
-                   nameOutputFile,
-                   tr,
-                   vl,
-                   tr_l2, vl_l2, tr_l3, vl_l3, tr_l4, vl_l4, tr_l5, vl_l5, tr_l6, vl_l6){
+modeling <- function(approachSelected,
+                     algorithmSelected,
+                     randomSeed,
+                     isCrossValidation,
+                     nSplits, #only if isCrossValidation == TRUE
+                     ontology,
+                     pathInput,
+                     pathOutput,
+                     pathOutputModel,
+                     nameOutputFile,
+                     tr,
+                     vl,
+                     tr_l2, vl_l2, tr_l3, vl_l3, tr_l4, vl_l4, tr_l5, vl_l5, tr_l6, vl_l6){
   
-  print("comienzo el modulo de modelado")
+  # print("comienzo el modulo de modelado")
   if(as.logical(isCrossValidation)){
     if(approachSelected %in% c("multilevel_ap2")){
       nSplits <- as.numeric(nSplits)
@@ -36,7 +36,7 @@ modela <- function(approachSelected,
           print("empiezo la iteracion: ")
           print(i)
           dir.create(paste(pathOutput,"fold",i,sep=""))
-          app2_C50(semilla = semilla,
+          app2_C50(randomSeed = randomSeed,
                    pathInput = paste(pathInput,"fold",i,"/",sep=""),
                    pathOutputModel = paste(pathOutputModel,"fold",i,"/",sep=""),
                    pathOutput = paste(pathOutput,"fold",i,"/",sep=""),
@@ -50,10 +50,10 @@ modela <- function(approachSelected,
       }else if(algorithmSelected %in% c("DL")){
         for(i in 1:nSplits){
           dir.create(paste(pathOutput,"fold",i,sep=""))
-          app2_DL(semilla = semilla,
+          app2_DL(randomSeed = randomSeed,
                   pathInput = paste(pathInput,"fold",i,"/",sep=""),
                   pathOutputModel = paste(pathOutputModel,"fold",i,"/",sep=""),
-                  pathOutput = paste(pathOutput,"fold",i,,"/",sep=""),
+                  pathOutput = paste(pathOutput,"fold",i,"/",sep=""),
                   nameOutputFile = nameOutputFile,
                   tr = tr, vl = vl,
                   tr_l2 = tr_l2, vl_l2 = tr_l2,
@@ -66,7 +66,7 @@ modela <- function(approachSelected,
           dir.create(paste(pathOutput,"fold",i,sep=""))
           print("empiezo a iteracion: ")
           print(i)
-          app2_RF(semilla = semilla,
+          app2_RF(randomSeed = randomSeed,
                   pathInput = paste(pathInput,"fold",i,"/",sep=""),
                   pathOutputModel = paste(pathOutputModel,"fold",i,"/",sep=""),
                   pathOutput = paste(pathOutput,"fold",i,"/",sep=""),
@@ -85,7 +85,7 @@ modela <- function(approachSelected,
   else{
     if(approachSelected %in% c("global_ap1")){
       if(algorithmSelected %in% c("NB")){
-        app1_nb(semilla = semilla,
+        app1_nb(randomSeed = randomSeed,
                 pathInput = pathInput,
                 pathOutput = pathOutput,
                 pathOutputModel = pathOutputModel,
@@ -96,7 +96,7 @@ modela <- function(approachSelected,
         #                        getwd(),"/levels_ontology/dbpedia_3.9.owl ",paste(pathOutput,
         #                                                                          nameOutputFile,"_nb.ttl",sep = ""),sep=""))
       }else if(algorithmSelected %in% c("DL")){
-        app1_dl(semilla = semilla,
+        app1_dl(randomSeed = randomSeed,
                 pathInput = pathInput,
                 pathOutput = pathOutput,
                 pathOutputModel = pathOutputModel,
@@ -107,7 +107,7 @@ modela <- function(approachSelected,
         #                        getwd(),"/levels_ontology/dbpedia_3.9.owl ",paste(pathOutput,
         #                                                                          nameOutputFile,"_nb.ttl",sep = ""),sep=""))
       }else if(algorithmSelected %in% c("RF")){
-        app1_rf(semilla = semilla,
+        app1_rf(randomSeed = randomSeed,
                 pathInput = pathInput,
                 pathOutput = pathOutput,
                 pathOutputModel = pathOutputModel,
@@ -134,7 +134,7 @@ modela <- function(approachSelected,
                                    nameOutputFile,".ttl",sep = ""),sep=""))
     }else if(approachSelected %in% c("multilevel_ap2")){
       if(algorithmSelected %in% c("C5.0")){
-        app2_C50(semilla = semilla,
+        app2_C50(randomSeed = randomSeed,
                  pathInput = pathInput,
                  pathOutputModel = pathOutputModel,
                  pathOutput = pathOutput,
@@ -145,7 +145,7 @@ modela <- function(approachSelected,
                  tr_l4 = tr_l4, vl_l4 = tr_l4,
                  tr_l5 = tr_l5, vl_l5 = tr_l5)
       }else if(algorithmSelected %in% c("DL")){
-        app2_DL(semilla = semilla,
+        app2_DL(randomSeed = randomSeed,
                 pathInput = pathInput,
                 pathOutputModel = pathOutputModel,
                 pathOutput = pathOutput,
@@ -156,7 +156,7 @@ modela <- function(approachSelected,
                 tr_l4 = tr_l4, vl_l4 = tr_l4,
                 tr_l5 = tr_l5, vl_l5 = tr_l5)
       }else if(algorithmSelected %in% c("RF")){
-        app2_RF(semilla = semilla,
+        app2_RF(randomSeed = randomSeed,
                 pathInput = pathInput,
                 pathOutputModel = pathOutputModel,
                 pathOutput = pathOutput,
@@ -171,7 +171,7 @@ modela <- function(approachSelected,
       }
     }else if(approachSelected %in% c("cascade_ap3")){
       if(algorithmSelected %in% c("DL")){
-        app3_DL(semilla = semilla,
+        app3_DL(randomSeed = randomSeed,
                 pathInput = pathInput,
                 pathOutputModel = pathOutputModel,
                 pathOutput = pathOutput,
@@ -182,7 +182,7 @@ modela <- function(approachSelected,
                 tr_l4 = tr_l4, vl_l4 = tr_l4,
                 tr_l5 = tr_l5, vl_l5 = tr_l5)
       }else if(algorithmSelected %in% c("RF")){
-        app3_RF(semilla = semilla,
+        app3_RF(randomSeed = randomSeed,
                 pathInput = pathInput,
                 pathOutputModel = pathOutputModel,
                 pathOutput = pathOutput,
@@ -200,12 +200,12 @@ modela <- function(approachSelected,
     }
   }
   
-  print("acabo el modulo de modelado")
+  # print("acabo el modulo de modelado")
 }
 
 predice <- function(approachSelected,
                     algorithmSelected,
-                    semilla,
+                    randomSeed,
                     pathInput,
                     pathOutput,
                     pathOutputModel,

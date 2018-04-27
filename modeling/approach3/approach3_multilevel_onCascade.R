@@ -2,7 +2,7 @@
 #approach3_multilevel_onCascade.R
 
 
-app3_DL <- function(semilla, pathInput, pathOutput, pathOutputModel, nameOutputFile,
+app3_DL <- function(randomSeed, pathInput, pathOutput, pathOutputModel, nameOutputFile,
                     tr, vl, tr_l2, vl_l2, tr_l3, vl_l3, tr_l4, vl_l4, tr_l5, vl_l5){
   
   
@@ -44,16 +44,14 @@ app3_DL <- function(semilla, pathInput, pathOutput, pathOutputModel, nameOutputF
     x=2:(ncol(train)-11),
     y=(ncol(train)-10),
     stopping_rounds = 0,
-    seed = semilla)
-  summary(dl_nivel1_v2)
-  ./output/models/approach3/
-    ./output/models/usingEsDBpedia201610/approach3/
+    seed = randomSeed)
+  # summary(dl_nivel1_v2)
     h2o.saveModel(dl_n1, path=pathOutputModel)
   
-  h2o.init(
-    nthreads=-1            ## -1: use all available threads
-    #max_mem_size = "2G"
-  )
+  # h2o.init(
+  #   nthreads=-1            ## -1: use all available threads
+  #   #max_mem_size = "2G"
+  # )
   ##Nivel 2
   dl_n2_m1 <- h2o.deeplearning(
     model_id="dl_n2_m1",
@@ -62,14 +60,14 @@ app3_DL <- function(semilla, pathInput, pathOutput, pathOutputModel, nameOutputF
     x=2:(ncol(train)-11),
     y=(ncol(train)-8),
     stopping_rounds = 0,
-    seed = semilla)
-  summary(dl_n2_m1)
+    seed = randomSeed)
+  # summary(dl_n2_m1)
   h2o.saveModel(dl_n2_m1, path=pathOutputModel)
   
-  h2o.init(
-    nthreads=-1            ## -1: use all available threads
-    #max_mem_size = "2G"
-  )
+  # h2o.init(
+  #   nthreads=-1            ## -1: use all available threads
+  #   #max_mem_size = "2G"
+  # )
   dl_n2_m4 <- h2o.deeplearning(
     model_id="dl_n2_m4",
     training_frame=train_sinDesc_N2,
@@ -77,14 +75,14 @@ app3_DL <- function(semilla, pathInput, pathOutput, pathOutputModel, nameOutputF
     x=2:(ncol(train_sinDesc_N2)-10),
     y=(ncol(train_sinDesc_N2)-9),
     stopping_rounds = 0,
-    seed = semilla)
-  summary(dl_n2_m4)
+    seed = randomSeed)
+  # summary(dl_n2_m4)
   h2o.saveModel(dl_n2_m4, path=pathOutputModel)
   
-  h2o.init(
-    nthreads=-1            ## -1: use all available threads
+  # h2o.init(
+    # nthreads=-1            ## -1: use all available threads
     #max_mem_size = "2G"
-  )
+  # )
   ###Nivel 3
   dl_n3_m1 <- h2o.deeplearning(
     model_id="dl_n3_m1",
@@ -93,14 +91,14 @@ app3_DL <- function(semilla, pathInput, pathOutput, pathOutputModel, nameOutputF
     x=2:(ncol(train)-11),
     y=(ncol(train)-6),
     stopping_rounds = 0,
-    seed = semilla)
+    seed = randomSeed)
   #summary(dl_n3_m1)
   h2o.saveModel(dl_n3_m1, path=pathOutputModel)
   
-  h2o.init(
-    nthreads=-1            ## -1: use all available threads
-    #max_mem_size = "2G"
-  )
+  # h2o.init(
+  #   nthreads=-1            ## -1: use all available threads
+  #   #max_mem_size = "2G"
+  # )
   dl_n3_m4 <- h2o.deeplearning(
     model_id="dl_n3_m4",
     training_frame=train_sinDesc_N3,
@@ -108,14 +106,14 @@ app3_DL <- function(semilla, pathInput, pathOutput, pathOutputModel, nameOutputF
     x=2:(ncol(train_sinDesc_N3)-8),
     y=(ncol(train_sinDesc_N3)-7),
     stopping_rounds = 0,
-    seed = semilla)
+    seed = randomSeed)
   #summary(dl_n3_m4)
   h2o.saveModel(dl_n3_m4, path=pathOutputModel)
   
-  h2o.init(
-    nthreads=-1            ## -1: use all available threads
-    #max_mem_size = "2G"
-  )
+  # h2o.init(
+  #   nthreads=-1            ## -1: use all available threads
+  #   #max_mem_size = "2G"
+  # )
   ###Nivel 4
   dl_n4_m1 <- h2o.deeplearning(
     model_id="dl_n4_m1",
@@ -124,14 +122,14 @@ app3_DL <- function(semilla, pathInput, pathOutput, pathOutputModel, nameOutputF
     x=2:(ncol(train)-6),
     y=(ncol(train)-4),
     stopping_rounds = 0,
-    seed = semilla)
+    seed = randomSeed)
   #summary(dl_n4_m1)
   h2o.saveModel(dl_n4_m1, path=pathOutputModel)
   
-  h2o.init(
-    nthreads=-1            ## -1: use all available threads
-    #max_mem_size = "2G"
-  )
+  # h2o.init(
+  #   nthreads=-1            ## -1: use all available threads
+  #   #max_mem_size = "2G"
+  # )
   dl_n4_m4 <- h2o.deeplearning(
     model_id="dl_n4_m4",
     training_frame=train_sinDesc_N4,
@@ -139,14 +137,14 @@ app3_DL <- function(semilla, pathInput, pathOutput, pathOutputModel, nameOutputF
     x=2:(ncol(train_sinDesc_N4)-6),
     y=(ncol(train_sinDesc_N4)-5),
     stopping_rounds = 0,
-    seed = semilla)
+    seed = randomSeed)
   #summary(dl_n4_m4)
   h2o.saveModel(dl_n4_m4, path=pathOutputModel)
   
-  h2o.init(
-    nthreads=-1            ## -1: use all available threads
-    #max_mem_size = "2G"
-  )
+  # h2o.init(
+  #   nthreads=-1            ## -1: use all available threads
+  #   #max_mem_size = "2G"
+  # )
   ###Nivel 5
   dl_n5_m1 <- h2o.deeplearning(
     model_id="dl_n5_m1",
@@ -155,14 +153,14 @@ app3_DL <- function(semilla, pathInput, pathOutput, pathOutputModel, nameOutputF
     x=2:(ncol(train)-11),
     y=(ncol(train)-2),
     stopping_rounds = 0,
-    seed = semilla)
+    seed = randomSeed)
   #summary(dl_n5_m1)
   h2o.saveModel(dl_n5_m1, path=pathOutputModel)
   
-  h2o.init(
-    nthreads=-1            ## -1: use all available threads
-    #max_mem_size = "2G"
-  )
+  # h2o.init(
+  #   nthreads=-1            ## -1: use all available threads
+  #   #max_mem_size = "2G"
+  # )
   dl_n5_m4 <- h2o.deeplearning(
     model_id="dl_n5_m4",
     training_frame=train_sinDesc_N5,
@@ -170,7 +168,7 @@ app3_DL <- function(semilla, pathInput, pathOutput, pathOutputModel, nameOutputF
     x=2:(ncol(train_sinDesc_N5)-3),
     y=(ncol(train_sinDesc_N5)-3),
     stopping_rounds = 0,
-    seed = semilla)
+    seed = randomSeed)
   #summary(dl_n5_m4)
   h2o.saveModel(dl_n5_m4, path=pathOutputModel)
   
@@ -236,12 +234,31 @@ app3_DL <- function(semilla, pathInput, pathOutput, pathOutputModel, nameOutputF
                       "Class5_m1",  #9
                       "Class5_m4")  #10
   
-  write.csv(test, file = paste(pathOutput,nameOutputFile,"_dl.csv", sep = ''), fileEncoding = "UTF-8", row.names=FALSE)
+  write.csv(test, file = paste(pathOutput,nameOutputFile,".csv", sep = ''), fileEncoding = "UTF-8", row.names=FALSE)
+  
+  salida_test1_n1 <- test[,c(1,2)]
+  colnames(salida_test1_n1) <- c("s","o")
+  salida_test1_n2 <- test[test$Class2_m1!="desconocido",c(1,4)]
+  colnames(salida_test1_n2) <- c("s","o")
+  salida_test1_n3 <- test[test$Class3_m1!="desconocido",c(1,6)]
+  colnames(salida_test1_n3) <- c("s","o")
+  salida_test1_n4 <- test[test$Class4_m1!="desconocido",c(1,8)]
+  colnames(salida_test1_n4) <- c("s","o")
+  salida_test1_n5 <- test[test$Class5_m1!="desconocido",c(1,10)]
+  colnames(salida_test1_n5) <- c("s","o")
+  
+  salida_test1 <- rbind(salida_test1_n1,
+                           salida_test1_n2,
+                           salida_test1_n3,
+                           salida_test1_n4,
+                           salida_test1_n5)
+  
+  
   
   salida_test1$p <- "<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>"
   salida_test1[,c(1,2,3)] <- salida_test1[,c(1,3,2)]
   colnames(salida_test1) <- c("s","p","o")
-  write.table(salida_test1, file = paste(pathOutput,nameOutputFile,"_dl.ttl", sep = ''),
+  write.table(salida_test1, file = paste(pathOutput,nameOutputFile,".ttl", sep = ''),
               fileEncoding = "UTF-8", sep = " ", row.names=FALSE, col.names=FALSE, quote = FALSE)
   
 }
@@ -249,7 +266,7 @@ app3_DL <- function(semilla, pathInput, pathOutput, pathOutputModel, nameOutputF
 
 
 
-app3_RF <- function(semilla, pathInput, pathOutput, pathOutputModel, nameOutputFile,
+app3_RF <- function(randomSeed, pathInput, pathOutput, pathOutputModel, nameOutputFile,
                     tr, vl, tr_l2, vl_l2, tr_l3, vl_l3, tr_l4, vl_l4, tr_l5, vl_l5){
   library(h2o)
   h2o.init(
@@ -479,7 +496,7 @@ app3_RF <- function(semilla, pathInput, pathOutput, pathOutputModel, nameOutputF
                          "Class5_m1",  #9
                          "Class5_m4")  #10
 
-  write.csv(test_rf, file = paste(pathOutput,nameOutputFile,"_rf.csv", sep = ''), fileEncoding = "UTF-8", row.names=FALSE)
+  write.csv(test_rf, file = paste(pathOutput,nameOutputFile,".csv", sep = ''), fileEncoding = "UTF-8", row.names=FALSE)
   
   
   salida_test1_n1_rf <- test_rf[,c(1,2)]
@@ -499,10 +516,11 @@ app3_RF <- function(semilla, pathInput, pathOutput, pathOutputModel, nameOutputF
                            salida_test1_n4_rf,
                            salida_test1_n5_rf)
   
-  salida_test1$p <- "<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>"
-  salida_test1[,c(1,2,3)] <- salida_test1[,c(1,3,2)]
-  colnames(salida_test1) <- c("s","p","o")
-  write.table(salida_test1, file = paste(pathOutput,nameOutputFile,"_rf.ttl", sep = ''),
+  salida_test1_rf$p <- "<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>"
+  salida_test1_rf[,c(1,2,3)] <- salida_test1_rf[,c(1,3,2)]
+  colnames(salida_test1_rf) <- c("s","p","o")
+  salida_test1_rf$punto <- "."
+  write.table(salida_test1_rf, file = paste(pathOutput,nameOutputFile,".ttl", sep = ''),
               fileEncoding = "UTF-8", sep = " ", row.names=FALSE, col.names=FALSE, quote = FALSE)
   
   

@@ -4,12 +4,12 @@
 
 source(paste(getwd(),"/evaluating/evaluate_complete.R",sep=""))
 
-evalua <- function(pathDT_GeneradoCompleto,
-                   pathDT_ReservadoCompleto,
-                   pathNivelesCompleto,
-                   pathSalida){
+evaluating <- function(pathDT_GeneratedCompleted,
+                   pathDT_ReservedCompleted,
+                   pathLevelsCompleted,
+                   pathOutput){
   print("comienzo el modulo de evaluacion")
-  evalua_completo(pathDT_GeneradoCompleto, pathDT_ReservadoCompleto, pathNivelesCompleto, pathSalida)
+  evalua_completed(pathDT_GeneratedCompleted, pathDT_ReservedCompleted, pathLevelsCompleted, pathOutput)
   print("acabo el modulo de evaluacion")
 }
 

@@ -1,15 +1,15 @@
 #evalua_completo.R
 
-evalua_generalAndMean <- function(pathDT_Generado, pathDT_Reservado){
+evalua_generalAndMean <- function(pathDT_Generated, pathDT_Reserved){
   # library(sqldf)
   
-  sdtypes_test_V3 <- read.csv(file=pathDT_Generado,
+  sdtypes_test_V3 <- read.csv(file=pathDT_Generated,
                               header=FALSE, sep=" ", encoding = "UTF-8", stringsAsFactors = FALSE)
   sdtypes_test_V3$V4 <- NULL
   names(sdtypes_test_V3) <- c("s","p","o")
   sdtypes_test_V3 <- sdtypes_test_V3[grep('^<http://dbpedia.org/ontology/',sdtypes_test_V3$o),]
   
-  tiposReservados_test_V3 <- read.csv(file=pathDT_Reservado,
+  tiposReservados_test_V3 <- read.csv(file=pathDT_Reserved,
                                       header=FALSE, sep=" ", encoding = "UTF-8", stringsAsFactors = FALSE)
   tiposReservados_test_V3$V4 <- NULL
   colnames(tiposReservados_test_V3) <- c("s","p","o")
@@ -95,31 +95,31 @@ evalua_generalAndMean <- function(pathDT_Generado, pathDT_Reservado){
 }
 
 
-evalua_leaves <- function(pathDT_Generado, pathDT_Reservado, pathNiveles){
+evalua_leaves <- function(pathDT_Generated, pathDT_Reserved, pathlevels){
   
-  sdtypes_test_V3 <- read.csv(file=pathDT_Generado,
+  sdtypes_test_V3 <- read.csv(file=pathDT_Generated,
                               header=FALSE, sep=" ", encoding = "UTF-8", stringsAsFactors = FALSE)
   sdtypes_test_V3$V4 <- NULL
   colnames(sdtypes_test_V3) <- c("s","p","o")
   sdtypes_test_V3 <- sdtypes_test_V3[grep('^<http://dbpedia.org/ontology/',sdtypes_test_V3$o),]
   
-  tiposReservados_test_V3 <- read.csv(file=pathDT_Reservado,
+  tiposReservados_test_V3 <- read.csv(file=pathDT_Reserved,
                                       header=FALSE, sep=" ", encoding = "UTF-8", stringsAsFactors = FALSE)
   tiposReservados_test_V3$V4 <- NULL
   colnames(tiposReservados_test_V3) <- c("s","p","o")
   tiposReservados_test_V3 <- tiposReservados_test_V3[grep('^<http://dbpedia.org/ontology/',tiposReservados_test_V3$o),]
   
-  nivel1 <- read.csv(file=paste(pathNiveles,"nivel1.csv",sep=""),
+  nivel1 <- read.csv(file=paste(pathlevels,"nivel1.csv",sep=""),
                      header=TRUE, sep=" ", encoding = "UTF-8")
-  nivel2 <- read.csv(file=paste(pathNiveles,"nivel2.csv",sep=""),
+  nivel2 <- read.csv(file=paste(pathlevels,"nivel2.csv",sep=""),
                      header=TRUE, sep=" ", encoding = "UTF-8")
-  nivel3 <- read.csv(file=paste(pathNiveles,"nivel3.csv",sep=""),
+  nivel3 <- read.csv(file=paste(pathlevels,"nivel3.csv",sep=""),
                      header=TRUE, sep=" ", encoding = "UTF-8")
-  nivel4 <- read.csv(file=paste(pathNiveles,"nivel4.csv",sep=""),
+  nivel4 <- read.csv(file=paste(pathlevels,"nivel4.csv",sep=""),
                      header=TRUE, sep=" ", encoding = "UTF-8")
-  nivel5 <- read.csv(file=paste(pathNiveles,"nivel5.csv",sep=""),
+  nivel5 <- read.csv(file=paste(pathlevels,"nivel5.csv",sep=""),
                      header=TRUE, sep=" ", encoding = "UTF-8")
-  nivel6 <- read.csv(file=paste(pathNiveles,"nivel6.csv",sep=""),
+  nivel6 <- read.csv(file=paste(pathlevels,"nivel6.csv",sep=""),
                      header=TRUE, sep=" ", encoding = "UTF-8")
   
   
@@ -240,30 +240,30 @@ evalua_leaves <- function(pathDT_Generado, pathDT_Reservado, pathNiveles){
 }
 
 
-evalua_levels <- function(pathDT_Generado, pathDT_Reservado, pathNiveles){
-  sdtypes_test_V3 <- read.csv(file=pathDT_Generado,
+evalua_levels <- function(pathDT_Generated, pathDT_Reserved, pathlevels){
+  sdtypes_test_V3 <- read.csv(file=pathDT_Generated,
                               header=FALSE, sep=" ", encoding = "UTF-8", stringsAsFactors = FALSE)
   sdtypes_test_V3$V4 <- NULL
   names(sdtypes_test_V3) <- c("s","p","o")
   sdtypes_test_V3 <- sdtypes_test_V3[grep('^<http://dbpedia.org/ontology/',sdtypes_test_V3$o),]
   
-  tiposReservados_test_V3 <- read.csv(file=pathDT_Reservado,
+  tiposReservados_test_V3 <- read.csv(file=pathDT_Reserved,
                                       header=FALSE, sep=" ", encoding = "UTF-8", stringsAsFactors = FALSE)
   tiposReservados_test_V3$V4 <- NULL
   colnames(tiposReservados_test_V3) <- c("s","p","o")
   tiposReservados_test_V3 <- tiposReservados_test_V3[grep('^<http://dbpedia.org/ontology/',tiposReservados_test_V3$o),]
   
-  nivel1 <- read.csv(file=paste(pathNiveles,"nivel1.csv",sep=""),
+  nivel1 <- read.csv(file=paste(pathlevels,"nivel1.csv",sep=""),
                      header=TRUE, sep=" ", encoding = "UTF-8")
-  nivel2 <- read.csv(file=paste(pathNiveles,"nivel2.csv",sep=""),
+  nivel2 <- read.csv(file=paste(pathlevels,"nivel2.csv",sep=""),
                      header=TRUE, sep=" ", encoding = "UTF-8")
-  nivel3 <- read.csv(file=paste(pathNiveles,"nivel3.csv",sep=""),
+  nivel3 <- read.csv(file=paste(pathlevels,"nivel3.csv",sep=""),
                      header=TRUE, sep=" ", encoding = "UTF-8")
-  nivel4 <- read.csv(file=paste(pathNiveles,"nivel4.csv",sep=""),
+  nivel4 <- read.csv(file=paste(pathlevels,"nivel4.csv",sep=""),
                      header=TRUE, sep=" ", encoding = "UTF-8")
-  nivel5 <- read.csv(file=paste(pathNiveles,"nivel5.csv",sep=""),
+  nivel5 <- read.csv(file=paste(pathlevels,"nivel5.csv",sep=""),
                      header=TRUE, sep=" ", encoding = "UTF-8")
-  nivel6 <- read.csv(file=paste(pathNiveles,"nivel6.csv",sep=""),
+  nivel6 <- read.csv(file=paste(pathlevels,"nivel6.csv",sep=""),
                      header=TRUE, sep=" ", encoding = "UTF-8")
   
   guardaSdtypes_test_V3 <- sdtypes_test_V3
@@ -495,7 +495,7 @@ evalua_levels <- function(pathDT_Generado, pathDT_Reservado, pathNiveles){
 }
 
 
-evalua_completo <- function(pathDT_GeneradoCompleto, pathDT_ReservadoCompleto, pathNivelesCompleto, pathSalida){
+evalua_completed <- function(pathDT_GeneratedCompleted, pathDT_ReservedCompleted, pathLevelsCompleted, pathOutput){
   
   n0 <- c("nivel0",100,100,100)
   resultados <- data.frame(t(n0))
@@ -505,24 +505,24 @@ evalua_completo <- function(pathDT_GeneradoCompleto, pathDT_ReservadoCompleto, p
   resultados$recall <- as.character(resultados$recall)
   resultados$fmeasure <-as.character(resultados$fmeasure)
   
-  resultados_generalYMedias <- evalua_generalAndMean(pathDT_Generado = pathDT_GeneradoCompleto,
-                                                     pathDT_Reservado = pathDT_ReservadoCompleto)
+  resultados_generalYMedias <- evalua_generalAndMean(pathDT_Generated = pathDT_GeneratedCompleted,
+                                                     pathDT_Reserved = pathDT_ReservedCompleted)
   resultados <- rbind(resultados,resultados_generalYMedias)
   
-  resultados_hojas <- evalua_leaves(pathDT_Generado = pathDT_GeneradoCompleto,
-                                    pathDT_Reservado = pathDT_ReservadoCompleto,
-                                    pathNiveles = pathNivelesCompleto)
+  resultados_hojas <- evalua_leaves(pathDT_Generated = pathDT_GeneratedCompleted,
+                                    pathDT_Reserved = pathDT_ReservedCompleted,
+                                    pathlevels = pathLevelsCompleted)
   resultados <- rbind(resultados,resultados_hojas)
   
-  resultados_niveles <- evalua_levels(pathDT_Generado = pathDT_GeneradoCompleto,
-                                      pathDT_Reservado = pathDT_ReservadoCompleto,
-                                      pathNiveles = pathNivelesCompleto)
+  resultados_niveles <- evalua_levels(pathDT_Generated = pathDT_GeneratedCompleted,
+                                      pathDT_Reserved = pathDT_ReservedCompleted,
+                                      pathlevels = pathLevelsCompleted)
   resultados <- rbind(resultados,resultados_niveles)
   
   
   resultados <- resultados[-1,]
   
-  write.table(resultados,file = pathSalida,
+  write.table(resultados,file = pathOutput,
               fileEncoding = "UTF-8", row.names=FALSE, quote = FALSE, sep = ",")
   
   return(resultados)
@@ -531,7 +531,7 @@ evalua_completo <- function(pathDT_GeneradoCompleto, pathDT_ReservadoCompleto, p
 
 #funciones especiales para calcular las medias y desviaciones típicas de un conjunto de evaluaciones
 
-calcula_media_matrices <- function(list_DT){
+calculate_mean_matrix <- function(list_DT){
   large.list <- list_DT
   vec <- unlist(large.list, use.names = FALSE)
   DIM <- dim(large.list[[1]])
@@ -544,7 +544,7 @@ calcula_media_matrices <- function(list_DT){
   return(list.mean)
 }
 
-calcula_sd_matrices <- function(list_DT){
+calculate_sd_matrix <- function(list_DT){
   large.list <- list_DT
   vec <- unlist(large.list, use.names = FALSE)
   DIM <- dim(large.list[[1]])
