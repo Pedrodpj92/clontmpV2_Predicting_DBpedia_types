@@ -39,8 +39,9 @@ This function calls H2O API functions to train a Deep Learning (multi-layer feed
 * Training files
 * Validating files
 ### Output expected:
+* csv file with every prediction done per each level, including binary decisions.
 * ttl file with predictions done, which resources are found in validation dataset.
-
+* trained models set.
 
 ## app3_RF 
 ### Description:
@@ -65,4 +66,6 @@ This function calls H2O API functions to train a Random Forest model for approac
 * Training files
 * Validating files
 ### Output expected:
+* csv file with every prediction done per each level, including binary decisions.
 * ttl file with predictions done, which resources are found in validation dataset.
+* trained models set.
