@@ -12,7 +12,7 @@ Clone or download the source code into your machine. Check next section to find 
 ### Prerequisites
 
 * 64-bits machine
-* [R 3.4.3 (2017-11-30)](https://www.r-project.org/ ) or later
+* [R 3.0.0](https://www.r-project.org/ ) or later
 * [Java 1.7](https://www.java.com/es/download/) or later
 * [H2O library](https://www.h2o.ai/) version 3.16.0.1 or later
 * [C5.0 R library](https://cran.r-project.org/web/packages/C50/C50.pdf) version 0.1.0-24 or later
