@@ -100,6 +100,9 @@ Options:
         -o CHARACTER, --pathOut=CHARACTER
                 path to output files. Directory should exist previously
 
+        -e CHARACTER, --pathIntermediateData=CHARACTER
+                path to intermediate data generated in process, as train/test partition sets.
+
         -f CHARACTER, --fileOut=CHARACTER
                 files' output identifier or name to track files about same experiment [default= output]
 
@@ -112,8 +115,11 @@ Options:
         -h, --help
                 Show this help message and exit
 
-Examples:
+                                      Note: each directory used in arguments as -e or -f should end with slash ('/')
+                                      
+                                      Example:
                              ./main_predicting_DBpedia_types_P_M_E.R -a global_ap1 -l DL -c FALSE -t 1 -n 2500 -d ES -v 201610 -m ~/inputData/mappingbased_objects_uncleaned_es.ttl -i ~/inputData/instance_types_completo_es.ttl -o ~/outputData/ -f ejecucion1_app1_DL_test1 -s 1234 -x P_M_E
+
 
                             In this case, The program will use first approach (global) with a deep learning algoritm, with one train/validate split where 2500 validation cases have at least 1 ingoing property. This case is used on EsDBpedia with the 2016-10 ontology. After that, we specify both input data (properties and types) followed by output path, and files identifier. All processes will use '1234' as random seed. The -x option will indicate a full workflow (preprocesing, modeling and evaluating)
 
