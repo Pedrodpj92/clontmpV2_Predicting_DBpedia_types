@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 #approach3_multilevel_onCascade.R
-
+source(paste(getwd(),"/monitoring/monitor_funs.R",sep=""))
 
 app3_DL <- function(randomSeed, pathInput, pathOutput, pathOutputModel, nameOutputFile,
                     tr, vl, tr_l2, vl_l2, tr_l3, vl_l3, tr_l4, vl_l4, tr_l5, vl_l5){
@@ -11,6 +11,8 @@ app3_DL <- function(randomSeed, pathInput, pathOutput, pathOutputModel, nameOutp
     nthreads=-1            ## -1: use all available threads
     #max_mem_size = "2G"
   )
+  
+  get_memoryStats(currentPid = Sys.getpid(), currentFunctionPoint = "app3_DL",isAfter = FALSE)
   
   df_training <- h2o.importFile(path = normalizePath(paste(pathInput,tr,sep = '')), header = TRUE)
   df_validating <- h2o.importFile(path = normalizePath(paste(pathInput,vl,sep = '')), header = TRUE)
@@ -46,7 +48,9 @@ app3_DL <- function(randomSeed, pathInput, pathOutput, pathOutputModel, nameOutp
     stopping_rounds = 0,
     seed = randomSeed)
   # summary(dl_nivel1_v2)
-    h2o.saveModel(dl_n1, path=pathOutputModel)
+  h2o.saveModel(dl_n1, path=pathOutputModel)
+  
+  get_memoryStats(currentPid = Sys.getpid(), currentFunctionPoint = "app3_DL level 1",isAfter = TRUE)
   
   # h2o.init(
   #   nthreads=-1            ## -1: use all available threads
@@ -63,7 +67,6 @@ app3_DL <- function(randomSeed, pathInput, pathOutput, pathOutputModel, nameOutp
     seed = randomSeed)
   # summary(dl_n2_m1)
   h2o.saveModel(dl_n2_m1, path=pathOutputModel)
-  
   # h2o.init(
   #   nthreads=-1            ## -1: use all available threads
   #   #max_mem_size = "2G"
@@ -79,9 +82,11 @@ app3_DL <- function(randomSeed, pathInput, pathOutput, pathOutputModel, nameOutp
   # summary(dl_n2_m4)
   h2o.saveModel(dl_n2_m4, path=pathOutputModel)
   
+  get_memoryStats(currentPid = Sys.getpid(), currentFunctionPoint = "app3_DL level 2",isAfter = TRUE)
+  
   # h2o.init(
-    # nthreads=-1            ## -1: use all available threads
-    #max_mem_size = "2G"
+  # nthreads=-1            ## -1: use all available threads
+  #max_mem_size = "2G"
   # )
   ###Nivel 3
   dl_n3_m1 <- h2o.deeplearning(
@@ -109,6 +114,8 @@ app3_DL <- function(randomSeed, pathInput, pathOutput, pathOutputModel, nameOutp
     seed = randomSeed)
   #summary(dl_n3_m4)
   h2o.saveModel(dl_n3_m4, path=pathOutputModel)
+  
+  get_memoryStats(currentPid = Sys.getpid(), currentFunctionPoint = "app3_DL level 3",isAfter = TRUE)
   
   # h2o.init(
   #   nthreads=-1            ## -1: use all available threads
@@ -141,6 +148,8 @@ app3_DL <- function(randomSeed, pathInput, pathOutput, pathOutputModel, nameOutp
   #summary(dl_n4_m4)
   h2o.saveModel(dl_n4_m4, path=pathOutputModel)
   
+  get_memoryStats(currentPid = Sys.getpid(), currentFunctionPoint = "app3_DL level 4",isAfter = TRUE)
+  
   # h2o.init(
   #   nthreads=-1            ## -1: use all available threads
   #   #max_mem_size = "2G"
@@ -172,6 +181,7 @@ app3_DL <- function(randomSeed, pathInput, pathOutput, pathOutputModel, nameOutp
   #summary(dl_n5_m4)
   h2o.saveModel(dl_n5_m4, path=pathOutputModel)
   
+  get_memoryStats(currentPid = Sys.getpid(), currentFunctionPoint = "app3_DL level 5",isAfter = TRUE)
   
   #####predicción
   validation_dl <- valid[,1:(ncol(valid)-11)]
@@ -212,6 +222,8 @@ app3_DL <- function(randomSeed, pathInput, pathOutput, pathOutputModel, nameOutp
   validation_dl <- h2o.cbind(validation_dl,test_n5_m1$predict)
   colnames(validation_dl)[ncol(validation_dl)] <- "Class5_Bin"
   
+  get_memoryStats(currentPid = Sys.getpid(), currentFunctionPoint = "app3_DL predictions",isAfter = TRUE)
+  
   #transform into table
   test <- cbind(as.data.frame(valid[,1]),     #1
                 as.data.frame(test_n1$predict),    #2
@@ -248,10 +260,10 @@ app3_DL <- function(randomSeed, pathInput, pathOutput, pathOutputModel, nameOutp
   colnames(salida_test1_n5) <- c("s","o")
   
   salida_test1 <- rbind(salida_test1_n1,
-                           salida_test1_n2,
-                           salida_test1_n3,
-                           salida_test1_n4,
-                           salida_test1_n5)
+                        salida_test1_n2,
+                        salida_test1_n3,
+                        salida_test1_n4,
+                        salida_test1_n5)
   
   
   
@@ -273,6 +285,8 @@ app3_RF <- function(randomSeed, pathInput, pathOutput, pathOutputModel, nameOutp
     nthreads=-1            ## -1: use all available threads
     #max_mem_size = "2G"
   )
+  
+  get_memoryStats(currentPid = Sys.getpid(), currentFunctionPoint = "app3_RF",isAfter = FALSE)
   
   df_training <- h2o.importFile(path = normalizePath(paste(pathInput,tr,sep = '')), header = TRUE)
   df_validating <- h2o.importFile(path = normalizePath(paste(pathInput,vl,sep = '')), header = TRUE)
@@ -313,6 +327,7 @@ app3_RF <- function(randomSeed, pathInput, pathOutput, pathOutputModel, nameOutp
     seed = 1234)
   h2o.saveModel(rf_n1, path=pathOutputModel)
   
+  get_memoryStats(currentPid = Sys.getpid(), currentFunctionPoint = "app3_RF level 1",isAfter = TRUE)
   
   ###Nivel 2
   rf_n2_m1 <- h2o.randomForest(
@@ -343,6 +358,7 @@ app3_RF <- function(randomSeed, pathInput, pathOutput, pathOutputModel, nameOutp
   #summary(rf_n2_m4)
   h2o.saveModel(rf_n2_m4, path=pathOutputModel)
   
+  get_memoryStats(currentPid = Sys.getpid(), currentFunctionPoint = "app3_RF level 2",isAfter = TRUE)
   
   ###Nivel 3
   rf_n3_m1 <- h2o.randomForest(
@@ -373,6 +389,7 @@ app3_RF <- function(randomSeed, pathInput, pathOutput, pathOutputModel, nameOutp
   #summary(rf_n3_m4)
   h2o.saveModel(rf_n3_m4, path=pathOutputModel)
   
+  get_memoryStats(currentPid = Sys.getpid(), currentFunctionPoint = "app3_RF level 3",isAfter = TRUE)
   
   ###Nivel 4
   rf_n4_m1 <- h2o.randomForest(
@@ -403,7 +420,7 @@ app3_RF <- function(randomSeed, pathInput, pathOutput, pathOutputModel, nameOutp
   #summary(rf_n4_m4)
   h2o.saveModel(rf_n4_m4, path=pathOutputModel)
   
-  
+  get_memoryStats(currentPid = Sys.getpid(), currentFunctionPoint = "app3_RF level 4",isAfter = TRUE)
   
   ###Nivel 5
   rf_n5_m1 <- h2o.randomForest(
@@ -434,6 +451,7 @@ app3_RF <- function(randomSeed, pathInput, pathOutput, pathOutputModel, nameOutp
   #summary(rf_n5_m4)
   h2o.saveModel(rf_n5_m4, path=pathOutputModel)
   
+  get_memoryStats(currentPid = Sys.getpid(), currentFunctionPoint = "app3_RF level 5",isAfter = TRUE)
   
   #####predicción
   validation_rf <- valid[,1:(ncol(valid)-11)]
@@ -474,6 +492,8 @@ app3_RF <- function(randomSeed, pathInput, pathOutput, pathOutputModel, nameOutp
   validation_rf <- h2o.cbind(validation_rf,test_n5_m1_rf$predict)
   colnames(validation_rf)[ncol(validation_rf)] <- "Class5_Bin"
   
+  get_memoryStats(currentPid = Sys.getpid(), currentFunctionPoint = "app3_RF predictions",isAfter = TRUE)
+  
   #transform into table
   test_rf <- cbind(as.data.frame(valid[,1]),     #1
                    as.data.frame(test_n1_rf$predict),    #2
@@ -495,7 +515,7 @@ app3_RF <- function(randomSeed, pathInput, pathOutput, pathOutputModel, nameOutp
                          "Class4_m4",  #8
                          "Class5_m1",  #9
                          "Class5_m4")  #10
-
+  
   write.csv(test_rf, file = paste(pathOutput,nameOutputFile,".csv", sep = ''), fileEncoding = "UTF-8", row.names=FALSE)
   
   
@@ -509,7 +529,7 @@ app3_RF <- function(randomSeed, pathInput, pathOutput, pathOutputModel, nameOutp
   colnames(salida_test1_n4_rf) <- c("s","o")
   salida_test1_n5_rf <- test_rf[test_rf$Class5_m1!="desconocido",c(1,10)]
   colnames(salida_test1_n5_rf) <- c("s","o")
-
+  
   salida_test1_rf <- rbind(salida_test1_n1_rf,
                            salida_test1_n2_rf,
                            salida_test1_n3_rf,

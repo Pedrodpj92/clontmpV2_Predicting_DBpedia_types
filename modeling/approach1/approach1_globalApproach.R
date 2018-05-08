@@ -10,6 +10,10 @@ app1_nb <- function(randomSeed, pathInput, pathOutput, pathOutputModel, nameOutp
     nthreads=-1            ## -1: use all available threads
     #max_mem_size = "2G"
   )
+  print("current memory consuming before app1_NB:")
+  print(system("free -h"))
+  print(system("ps aux --sort -rss | grep '/usr/lib/R/bin' | head -n 1"))
+  
   df_training_test <- h2o.importFile(path = normalizePath(paste(pathInput,tr,sep = '')), header = TRUE)
   df_validating_test <- h2o.importFile(path = normalizePath(paste(pathInput,vl,sep = '')), header = TRUE)
   
@@ -34,6 +38,9 @@ app1_nb <- function(randomSeed, pathInput, pathOutput, pathOutputModel, nameOutp
     seed = randomSeed)
   h2o.saveModel(nb_global_Approach1_test, path=pathOutputModel)
   
+  print("current memory consuming after app1_NB:")
+  print(system("free -h"))
+  print(system("ps aux --sort -rss | grep '/usr/lib/R/bin' | head -n 1"))
   
   test <- h2o.predict(object = nb_global_Approach1_test, newdata = valid_test[,2:(ncol(valid_test)-1)])[1]
   
@@ -62,6 +69,9 @@ app1_dl <- function(randomSeed, pathInput, pathOutput, pathOutputModel, nameOutp
   df_training_test <- h2o.importFile(path = normalizePath(paste(pathInput,tr,sep = '')), header = TRUE)
   df_validating_test <- h2o.importFile(path = normalizePath(paste(pathInput,vl,sep = '')), header = TRUE)
   
+  print("current memory consuming before app1_DL:")
+  print(system("free -h"))
+  print(system("ps aux --sort -rss | grep '/usr/lib/R/bin' | head -n 1"))
   
   train_test <- h2o.assign(df_training_test, "train_test.hex")
   valid_test <- h2o.assign(df_validating_test, "valid_test.hex")
@@ -85,6 +95,10 @@ app1_dl <- function(randomSeed, pathInput, pathOutput, pathOutputModel, nameOutp
   
   test <- h2o.predict(object = dl_global_Approach1_test, newdata = valid_test[,2:(ncol(valid_test)-1)])[1]
   
+  print("current memory consuming after app1_DL:")
+  print(system("free -h"))
+  print(system("ps aux --sort -rss | grep '/usr/lib/R/bin' | head -n 1"))
+  
   salida_test <- cbind(validating_test[,1],as.data.frame(test))
   salida_test$p <- "<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>"
   salida_test[,c(1,2,3)] <- salida_test[,c(1,3,2)]
@@ -105,6 +119,11 @@ app1_rf <- function(randomSeed, pathInput, pathOutput, pathOutputModel, nameOutp
     nthreads=-1            ## -1: use all available threads
     #max_mem_size = "2G"
   )
+  
+  print("current memory consuming before app1_RF:")
+  print(system("free -h"))
+  print(system("ps aux --sort -rss | grep '/usr/lib/R/bin' | head -n 1"))
+  
   df_training_test <- h2o.importFile(path = normalizePath(paste(pathInput,tr,sep = '')), header = TRUE)
   df_validating_test <- h2o.importFile(path = normalizePath(paste(pathInput,vl,sep = '')), header = TRUE)
   
@@ -133,6 +152,10 @@ app1_rf <- function(randomSeed, pathInput, pathOutput, pathOutputModel, nameOutp
   h2o.saveModel(rf_global_Approach1_test, path=pathOutputModel)
   
   test <- h2o.predict(object = rf_global_Approach1_test, newdata = valid_test[,2:(ncol(valid_test)-1)])[1]
+  
+  print("current memory consuming after app1_RF:")
+  print(system("free -h"))
+  print(system("ps aux --sort -rss | grep '/usr/lib/R/bin' | head -n 1"))
   
   salida_test <- cbind(validating_test[,1],as.data.frame(test))
   salida_test$p <- "<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>"

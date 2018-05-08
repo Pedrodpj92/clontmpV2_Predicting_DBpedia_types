@@ -50,6 +50,9 @@ option_list <- list(
   make_option(c("-o", "--pathOut"), type="character", default = NULL,
               help="path to output files. Directory should exist previously",
               metavar="character"),
+  make_option(c("-e", "--pathIntermediateData"), type="character", default = NULL,
+              help="path to intermediate data generated in process, as train/test partition sets.",
+              metavar="character"),
   make_option(c("-f", "--fileOut"), type="character", default = "output",
               help="files' output identifier or name to track files about same experiment [default= %default]",
               metavar="character"),
@@ -66,7 +69,9 @@ opt_parser <- OptionParser(usage = "Usage: %prog <options>",
                            description = "Description:
                            This software provides a complete Data Mining workflow for inferring new DBpedia types on resources which are found as objects.
                            ",
-                           epilogue = "Examples:
+                           epilogue = "
+                                      Note: each directory used in arguments as -e or -f should end with slash ('/')
+                                      Examples:
                              ./main_predicting_DBpedia_types_P_M_E.R -a global_ap1 -l DL -c FALSE -t 1 -n 2500 -d ES -v 201610 -m ~/inputData/mappingbased_objects_uncleaned_es.ttl -i ~/inputData/instance_types_completo_es.ttl -o ~/outputData/ -f ejecucion1_app1_DL_test1 -s 1234 -x P_M_E
                             
                             In this case, The program will use first approach (global) with a deep learning algoritm, with one train/validate split where 2500 validation cases have at least 1 ingoing property. This case is used on EsDBpedia with the 2016-10 ontology. After that, we specify both input data (properties and types) followed by output path, and files identifier. All processes will use '1234' as random seed. The -x option will indicate a full workflow (preprocesing, modeling and evaluating)
@@ -112,6 +117,10 @@ if(is.null(opt$mapping_based_properties)){
 if(is.null(opt$instance_types)){
   print_help(opt_parser)
   stop("instance_types argument must be supplied using -i or --instance_types options", call.=FALSE)
+}
+if(is.null(opt$pathIntermediateData)){
+  print_help(opt_parser)
+  stop("pathIntermediateData argument must be supplied (intermediate files's path) using -e or --pathIntermediateData options", call.=FALSE)
 }
 if(is.null(opt$pathOut)){
   print_help(opt_parser)
@@ -168,15 +177,22 @@ if(opt$versionOntology %in% c("39")){
   ontologia <- "201610"
   ontologia_owl <- "dbpedia_2016-10.owl"
 }else{
-  print("error, mejorar aviso, aunque nunca debería llegar a este punto")
+  print("error, improve this message")
 }
 
+isApproach1 <- FALSE #never get NULL
 if(opt$approach %in% c("global_ap1")){
   isApproach1 <- TRUE
 } else{
   isApproach1 <- FALSE
 }
 
+if(!dir.exists(opt$pathIntermediateData)){
+  dir.create(opt$pathIntermediateData)
+}
+if(!dir.exists(opt$pathOut)){
+  dir.create(opt$pathOut)
+}
 
 if(opt$executionMode %in% c("P_M_E")){
   preprocessing(file_mapping_based_properties_In = opt$mapping_based_properties,
@@ -185,8 +201,8 @@ if(opt$executionMode %in% c("P_M_E")){
                 path_levels = paste(getwd(),"/levels_ontology/",ontologia,"/",sep=""),
                 isCrossValidation = as.logical(opt$cross_validation),
                 isApproach1 = isApproach1,
-                path_splits_Out = paste(getwd(),"/intermediateData/",sep=""),
-                path_files_trainValidate_Out = paste(getwd(),"/intermediateData/",sep=""),
+                path_splits_Out = paste(getwd(),"/",opt$pathIntermediateData,sep=""),
+                path_files_trainValidate_Out = paste(getwd(),"/",opt$pathIntermediateData,sep=""),
                 file_training_Out = "trainingTest.csv",
                 file_validating_Out = "validatingTest.csv",
                 randomSeed = opt$seed,
@@ -214,12 +230,12 @@ if(opt$executionMode %in% c("P_M_E")){
                            getwd(),"/levels_ontology/dbotypes.jar ",
                            getwd(),"/levels_ontology/",ontologia_owl,
                            " ",
-                           paste(getwd(),"/intermediateData/reserva.ttl",sep=""),
+                           paste(getwd(),"/",opt$pathIntermediateData,"reserva.ttl",sep=""),
                            sep=""))
     system(command = paste("mv ",
-                           paste(getwd(),"/intermediateData/reserva.ttl.extended.csv",sep=""),
+                           paste(getwd(),"/",opt$pathIntermediateData,"reserva.ttl.extended.csv",sep=""),
                            " ",
-                           paste(getwd(),"/intermediateData/reserva.ttl",sep=""),sep=""))
+                           paste(getwd(),"/",opt$pathIntermediateData,"reserva.ttl",sep=""),sep=""))
   }
 }
 
@@ -237,7 +253,7 @@ if(opt$executionMode %in% c("P_M_E","M_E")){
            isCrossValidation = as.logical(opt$cross_validation),
            nSplits = opt$number_casesOrFolds,
            ontology = ontologia_owl,
-           pathInput = paste(getwd(),"/intermediateData/",sep=""),
+           pathInput = paste(getwd(),"/",opt$pathIntermediateData,sep=""),
            pathOutput = opt$pathOut,
            pathOutputModel = opt$pathOut,
            nameOutputFile = opt$fileOut,
@@ -264,13 +280,13 @@ if(opt$executionMode %in% c("P_M_E","M_E")){
 if(as.logical(opt$cross_validation)){
   for(i in 1:as.numeric(opt$number_casesOrFolds)){
     evaluating(pathDT_GeneratedCompleted = paste(opt$pathOut,"fold",i,"/",opt$fileOut,".ttl",sep=""),
-               pathDT_ReservedCompleted = paste(getwd(),"/intermediateData/","fold",i,"/","reserva.ttl",sep=""),
+               pathDT_ReservedCompleted = paste(getwd(),"/",opt$pathIntermediateData,"fold",i,"/","reserva.ttl",sep=""),
                pathLevelsCompleted = paste(getwd(),"/levels_ontology/",ontologia,"/",sep=""),
                pathOutput = paste(opt$pathOut,"fold",i,"/","evaluacion_",opt$fileOut,".csv",sep=""))
   }
 }else{
   evaluating(pathDT_GeneratedCompleted = paste(opt$pathOut,opt$fileOut,".ttl",sep=""),
-             pathDT_ReservedCompleted = paste(getwd(),"/intermediateData/reserva.ttl",sep=""),
+             pathDT_ReservedCompleted = paste(getwd(),"/",opt$pathIntermediateData,"reserva.ttl",sep=""),
              pathLevelsCompleted = paste(getwd(),"/levels_ontology/",ontologia,"/",sep=""),
              pathOutput = paste(opt$pathOut,"evaluacion_",opt$fileOut,".csv",sep=""))
 }

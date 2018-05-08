@@ -32,7 +32,6 @@ divide_oneSplit <- function(file_learningSet_In,
   
   
   set.seed(as.numeric(randomSeed))
-  
   countingIngoing_testSelection <- countingIngoing_test[sample(x = nrow(countingIngoing_test), size = n_cases_validating, replace = FALSE),]
   
   df_validating <- df_learningSet[df_learningSet$s %in% countingIngoing_testSelection$s,]

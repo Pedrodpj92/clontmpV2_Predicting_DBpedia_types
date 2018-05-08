@@ -5,6 +5,7 @@
 #revisar referencias a la hora de cargar el código y utilizar getwd()
 source(paste(getwd(),"/preparating/divide/divide_funs.R",sep=""))
 source(paste(getwd(),"/preparating/prepare/prepare_funs.R",sep=""))
+source(paste(getwd(),"/monitoring/monitor_funs.R",sep=""))
 
 preprocessing <- function(file_mapping_based_properties_In,
                           file_instance_types_In,
@@ -22,14 +23,22 @@ preprocessing <- function(file_mapping_based_properties_In,
                           test1_10_25,
                           tr_l2, vl_l2, tr_l3, vl_l3, tr_l4, vl_l4, tr_l5, vl_l5, tr_l6, vl_l6,
                           reserved){
-  # print("comienzo el modulo de preprocesamiento")
-  file_object_propertiesMatrix_Intermediate <- paste(getwd(),"/intermediateData/objects_properties_Matrix.csv",sep="")
-  file_learningSet_Intermediate <- paste(getwd(),"/intermediateData/learningSet.csv",sep="")
+  print("starting preparating module")
+  
+  file_object_propertiesMatrix_Intermediate <- paste(path_files_trainValidate_Out,"objects_properties_Matrix.csv",sep="")
+  file_learningSet_Intermediate <- paste(path_files_trainValidate_Out,"learningSet.csv",sep="")
   # path_splits_Intermediate <-paste(getwd(),"/intermediateData/crossValidation/",sep="")
   
+  get_memoryStats(currentPid = Sys.getpid(), currentFunctionPoint = "prepare_properties",isAfter = FALSE)
   prepare_properties(file_properties_In = file_mapping_based_properties_In,
                      file_object_propertiesMatrix_Out = file_object_propertiesMatrix_Intermediate,
                      domain_resourcesURI = domain_resources)
+  
+  get_memoryStats(currentPid = Sys.getpid(), currentFunctionPoint = "prepare_properties", isAfter = TRUE)
+  
+  get_memoryStats(currentPid = Sys.getpid(), currentFunctionPoint = "prepare_types_approaches",isAfter = FALSE)
+  
+
   
   # a ser posible, unir en una sola función, añadir parámetro isApproach1
   if(isApproach1){
@@ -46,6 +55,10 @@ preprocessing <- function(file_mapping_based_properties_In,
                      domain_resourcesURI = domain_resources)
   }
   
+  get_memoryStats(currentPid = Sys.getpid(), currentFunctionPoint = "prepare_types_approaches",isAfter = TRUE)
+  
+  
+  get_memoryStats(currentPid = Sys.getpid(), currentFunctionPoint = "training/validating divisions",isAfter = FALSE)
   
   if(isCrossValidation){
     divide_nSplit(file_learningSet_In = file_learningSet_Intermediate,
@@ -87,8 +100,10 @@ preprocessing <- function(file_mapping_based_properties_In,
                     vl_l6 = vl_l6,
                     reserved = reserved)
   }
+
+  get_memoryStats(currentPid = Sys.getpid(), currentFunctionPoint = "training/validating divisions",isAfter = TRUE)
   
-  # print("acabo el modulo de preprocesamiento")
+  print("ending preparating module")
 }
 
 
