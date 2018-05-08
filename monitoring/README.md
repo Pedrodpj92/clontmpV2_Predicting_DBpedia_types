@@ -1,4 +1,4 @@
-# Module 3: Evaluating
+# Module Monitoring
 
 The aim of this section is provide perform metrics and monitoring auxiliary functions. At the moment there is only one available.
 
