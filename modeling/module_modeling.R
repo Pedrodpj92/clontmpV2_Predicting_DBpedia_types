@@ -27,7 +27,7 @@ modeling <- function(approachSelected,
                      tr,
                      vl,
                      tr_l2, vl_l2, tr_l3, vl_l3, tr_l4, vl_l4, tr_l5, vl_l5, tr_l6, vl_l6){
-  
+  gc()
   print("starting modeling module")
   if(as.logical(isCrossValidation)){
     get_memoryStats(currentPid = Sys.getpid(), currentFunctionPoint = "app2 with cross-validation",isAfter = FALSE)
@@ -204,7 +204,7 @@ modeling <- function(approachSelected,
       stop("not proper approach selected, please, select one avaliable <global_ap1 | multilevel_ap2 | cascade_ap3> ", call.=FALSE)
     }
   }
-  
+  gc()
   print("ending modeling module")
 }
 

@@ -57,7 +57,10 @@ divide_oneSplit <- function(file_learningSet_In,
                              f_l5 = paste(path_files_trainValidate_Out,vl_l5,sep=""),
                              f_l6 = paste(path_files_trainValidate_Out,vl_l6sep=""))
   }
-  # print("llego aqui 11")
+  
+  rm(list=ls())
+  gc(verbose = TRUE)
+  
   return(0)
 }
 
@@ -139,6 +142,8 @@ divide_nSplit <- function(file_learningSet_In,
                            f_l5 = paste(path_splits_Out,"fold",nSplits,"/",tr_l5,sep=""),
                            f_l6 = paste(path_splits_Out,"fold",nSplits,"/",tr_l6,sep=""))
   
+  rm(list=ls())
+  gc(verbose = TRUE)
   
   return(0)
 }
@@ -177,27 +182,11 @@ getting_types_tottl <- function(file_dataSet_In,
                          header=FALSE, sep=",", encoding = "UTF-8", stringsAsFactors = FALSE)
   colnames(df_dataSet) <- df_dataSet[1,]
   df_dataSet <- df_dataSet[-1,]
-  # print("es approach 1")
-  # print(isApproach1)
-  # print("path fichero de entrada")
-  # print("el fichero cargado, resumen:")
-  # print(head(df_dataSet))
   if(isApproach1){
-    # print("llego aqui 1")
     df_dataSet[,c(2:(ncol(df_dataSet)-1))] <- sapply(df_dataSet[,c(2:(ncol(df_dataSet)-1))], as.numeric)
-    # print("llego aqui 2")
     test <- df_dataSet
-    # print("llego aqui 3")
     salida_test_n1 <- test[,c(1,ncol(test))]#getting class column
-    # print("lo que tiene test:")
-    # print(head(test))
-    # print("lo que queremos coger")
-    # print(head(test[,c(1,ncol(test))]))
-    # print("lo que cojemos realmente")
-    # print(salida_test_n1)
-    # print("llego aqui 4")
     salida_test <- salida_test_n1 
-    # print("llego aqui 5")
   }else{
     df_dataSet[,c(2:(ncol(df_dataSet)-11))] <- sapply(df_dataSet[,c(2:(ncol(df_dataSet)-11))], as.numeric)  
     test <- df_dataSet
@@ -219,35 +208,18 @@ getting_types_tottl <- function(file_dataSet_In,
                          salida_test_n4,
                          salida_test_n5)
   }
-  # print("llego aqui 6")
-  
-  # print(head(salida_test))
   salida_test$p <- "<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>"
-  # print("llego aqui 6 bis")
   salida_test[,c(1,2,3)] <- salida_test[,c(1,3,2)]
-  # print("llego aqui 7")
   colnames(salida_test) <- c("s","p","o")
   salida_test$punto <- "."
-  # print("llego aqui 8")
   write.table(salida_test, file = file_Out,
               fileEncoding = "UTF-8", row.names=FALSE,col.names = FALSE, quote = FALSE, sep=" ")
   
-  # print("llego aqui 9")
+  rm(list=ls())
+  gc(verbose = TRUE)
+  
   return(0)
 }
 
-
-#TO-DO: Hecho, revisar....
-# - Particiones para 5-fold (o n-fold) hecho para n_fold
-# ? crear n carpetas según los n folds que se quieran, sí, poner flag de opción
-# ? nombre de las carpetas creadas?
-# ? Otras interdependencias
-
-# - Separación de sets por niveles con "conocidos" (knownResources_Ln), hecho
-
-# - "Apilar" tipos para conseguir ttl de reserva para conversión posterior, hecho
-
-# Eficiencia vs interdependencia, punto crucial para avanzar
-# - ¿Una función que englobe estas dos y la que ya está hecha?
 
 

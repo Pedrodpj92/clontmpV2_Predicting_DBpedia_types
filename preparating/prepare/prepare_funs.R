@@ -19,7 +19,7 @@ prepare_properties <- function(file_properties_In,
   #                                header=FALSE, sep=" ", encoding = "UTF-8", stringsAsFactors = FALSE, quote = "")
   original_resources <- read.csv(file=file_properties_In,
                                  header=FALSE, sep=" ", encoding = "UTF-8", stringsAsFactors = FALSE, quote = "")
-
+  
   # print(nrow(original_resources))
   original_resources <- original_resources[grep(domain_resourcesURI,original_resources$V3),]
   original_resources$V4 <- NULL
@@ -28,13 +28,16 @@ prepare_properties <- function(file_properties_In,
   original_resources$p <- as.factor(original_resources$p)
   original_resources$o <- as.factor(original_resources$o)
   # print(nrow(original_resources))
-
+  
   
   conversion_Matriz <- original_resources[,c(3,2)]
   conversion_Matriz <- dcast(conversion_Matriz, o ~ p, fill=0)#ojo, puede tardar bastante
   # print(nrow(conversion_Matriz))
   write.csv(conversion_Matriz, file = file_object_propertiesMatrix_Out,
             fileEncoding = "UTF-8", row.names=FALSE)
+  
+  rm(list=ls())
+  gc(verbose = TRUE)
   
   return(0)
 }
@@ -100,13 +103,8 @@ prepare_app2and3 <- function(file_object_propertiesMatrix_In, file_instance_type
   
   datosObjetivo <- merge(x = recursos_conTipo, y = tipos_nivel1, by = 's')
   colnames(datosObjetivo)[ncol(datosObjetivo)] <- "Class1"
-  datosObjetivo$Class1 <- as.character(datosObjetivo$Class1)
-  # print(nrow(recursos_conTipo))
-  # print(nrow(tipos_nivel1))
-  # print(nrow(datosObjetivo))
-  # print("llego aqui")
   # if(nrow(datosObjetivo[is.na(datosObjetivo$Class),]$Class1)>0){
-    # datosObjetivo[is.na(datosObjetivo$Class),]$Class1 <- 'desconocido'#a nivel 1 no hay desconocidos  
+  # datosObjetivo[is.na(datosObjetivo$Class),]$Class1 <- 'desconocido'#a nivel 1 no hay desconocidos  
   # }
   
   datosObjetivo$Class1 <- as.factor(datosObjetivo$Class1)
@@ -152,7 +150,9 @@ prepare_app2and3 <- function(file_object_propertiesMatrix_In, file_instance_type
   datosObjetivo$Class6 <- as.character(datosObjetivo$Class6)
   datosObjetivo[is.na(datosObjetivo$Class6),]$Class6 <- 'desconocido'
   datosObjetivo$Class6_Bin <- rep(datosObjetivo$Class6)
+  # if(nrow(datosObjetivo[datosObjetivo$Class6_Bin!="desconocido",]$Class6_Bin)>0){
   datosObjetivo[datosObjetivo$Class6_Bin!="desconocido",]$Class6_Bin <- 'conocido'
+  # }
   datosObjetivo$Class6 <- as.factor(datosObjetivo$Class6)
   datosObjetivo$Class6_Bin <- as.factor(datosObjetivo$Class6_Bin)
   
@@ -164,14 +164,18 @@ prepare_app2and3 <- function(file_object_propertiesMatrix_In, file_instance_type
   # countingIngoing <- datosObjetivo[,c(1,ncol(datosObjetivo))]
   # datosObjetivo$auxCountIngoing <- NULL
   # write.csv(countingIngoing, file = pathOtro, fileEncoding = "UTF-8", row.names=FALSE)
- return(0) 
+  
+  rm(list=ls())
+  gc(verbose = TRUE)
+  
+  return(0) 
 }
 
 
 prepare_app1 <- function(file_object_propertiesMatrix_In, file_instance_types_In,
-                             file_learningSet_Out,
-                             path_levels,
-                             domain_resourcesURI){
+                         file_learningSet_Out,
+                         path_levels,
+                         domain_resourcesURI){
   library(reshape2)
   conversion_Matriz <- read.csv(file=file_object_propertiesMatrix_In,
                                 header=FALSE, sep=",", encoding = "UTF-8", stringsAsFactors = FALSE)
@@ -250,6 +254,9 @@ prepare_app1 <- function(file_object_propertiesMatrix_In, file_instance_types_In
   # countingIngoing <- datosObjetivo[,c(1,ncol(datosObjetivo))]
   # datosObjetivo$auxCountIngoing <- NULL
   # write.csv(countingIngoing, file = pathOtro, fileEncoding = "UTF-8", row.names=FALSE)
+  
+  rm(list=ls())
+  gc(verbose = TRUE)
   
   return(0)
 }
