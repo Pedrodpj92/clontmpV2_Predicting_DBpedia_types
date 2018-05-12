@@ -12,6 +12,8 @@ divide_oneSplit <- function(file_learningSet_In,
                             isApproach1,
                             tr_l2, vl_l2, tr_l3, vl_l3, tr_l4, vl_l4, tr_l5, vl_l5, tr_l6, vl_l6, reserved){
   
+  test1_10_25 <- as.numeric(test1_10_25)
+  
   df_learningSet <- read.csv(file=file_learningSet_In,
                              header=FALSE, sep=",", encoding = "UTF-8", stringsAsFactors = FALSE)
   colnames(df_learningSet) <- df_learningSet[1,]
@@ -42,7 +44,7 @@ divide_oneSplit <- function(file_learningSet_In,
   getting_types_tottl(file_dataSet_In = paste(path_files_trainValidate_Out,file_validating_Out,sep=""),
                       file_Out = paste(path_files_trainValidate_Out,reserved,sep=""),
                       isApproach1 = isApproach1)
-  # print("llego aqui 10")
+  
   if(!isApproach1){
     divide_knownResources_Ln(file_dataSet_In = paste(path_files_trainValidate_Out,file_training_Out,sep=""),
                              f_l2 = paste(path_files_trainValidate_Out,tr_l2,sep=""),

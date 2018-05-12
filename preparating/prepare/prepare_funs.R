@@ -156,6 +156,8 @@ prepare_app2and3 <- function(file_object_propertiesMatrix_In, file_instance_type
   datosObjetivo$Class6 <- as.factor(datosObjetivo$Class6)
   datosObjetivo$Class6_Bin <- as.factor(datosObjetivo$Class6_Bin)
   
+  datosObjetivo <- datosObjetivo[!duplicated(datosObjetivo$s),]
+  
   write.csv(datosObjetivo, file = file_learningSet_Out,
             fileEncoding = "UTF-8", row.names=FALSE)
   

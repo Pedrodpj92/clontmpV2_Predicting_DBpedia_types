@@ -8,6 +8,7 @@ library("optparse")
 source(paste(getwd(),"/preparating/module_preparating.R",sep=""))
 source(paste(getwd(),"/modeling/module_modeling.R",sep=""))
 source(paste(getwd(),"/evaluating/module_evaluating.R",sep=""))
+source(paste(getwd(),"/monitoring/monitor_funs.R",sep=""))
 
 
 
@@ -60,7 +61,7 @@ option_list <- list(
               help="random number generator seed for algorithms that are dependent on randomization [default= %default]",
               metavar = "integer"),
   make_option(c("-x","--executionMode"), type="character", default = NULL,
-              help="this main is divided in 3 modules: preprocesing, modeling, evaluating (predicting). Flag -x or --executionMode specify where this main script should start. This is useful, for instance, to generate the same train/validation data once and execute several approaches and/or algorithms. <P_M_E | M_E | E>",
+              help="this main is divided in 3 modules: preprocesing, modeling, evaluating (predicting). Flag -x or --executionMode specify where this main script should do. This is useful, for instance, to generate the same train/validation data once and execute several approaches and/or algorithms. <P_M_E | P | M_E >",
               metavar = "character")
 )
 
@@ -128,7 +129,7 @@ if(is.null(opt$pathOut)){
 }
 if(is.null(opt$executionMode)){
   print_help(opt_parser)
-  stop("Please, select one execution mode using -x or --executionMode options : <P_M_E | M_E | E>", call.=FALSE)
+  stop("Please, select one execution mode using -x or --executionMode options : <P_M_E | P | M_E >", call.=FALSE)
 }
 
 #second round
@@ -152,6 +153,10 @@ if(opt$approach %in% c("cascade_ap3") && !(opt$algorithm %in% c("DL","RF"))){
 if(!is.null(opt$test_ingoingCondition) && as.logical(opt$cross_validation)){
   print_help(opt_parser)
   stop("test_ingoingCondition argument should not be supplied if cross_validation is TRUE", call.=FALSE)
+}
+if(opt$executionMode %in% c("P_M_E"," P","M_E")){
+  print_help(opt_parser)
+  stop(paste("Please, select one execution mode using -x or --executionMode options : <P_M_E | P | M_E>",opt$executionMode), call.=FALSE)
 }
 
 
@@ -194,7 +199,7 @@ if(!dir.exists(opt$pathOut)){
   dir.create(opt$pathOut)
 }
 
-if(opt$executionMode %in% c("P_M_E")){
+if(opt$executionMode %in% c("P_M_E","P")){
   preprocessing(file_mapping_based_properties_In = opt$mapping_based_properties,
                 file_instance_types_In = opt$instance_types,
                 domain_resources = dominio,
@@ -205,10 +210,10 @@ if(opt$executionMode %in% c("P_M_E")){
                 path_files_trainValidate_Out = paste(getwd(),"/",opt$pathIntermediateData,sep=""),
                 file_training_Out = "trainingTest.csv",
                 file_validating_Out = "validatingTest.csv",
-                randomSeed = opt$seed,
-                nSplits = opt$number_casesOrFolds,
-                n_cases_validating = opt$number_casesOrFolds,
-                test1_10_25 = opt$test_ingoingCondition,
+                randomSeed = as.numeric(opt$seed),
+                nSplits = as.numeric(opt$number_casesOrFolds),
+                n_cases_validating = as.numeric(opt$number_casesOrFolds),
+                test1_10_25 = as.numeric(opt$test_ingoingCondition),
                 tr_l2 = "trainingTest_knownResources_L2.csv", #Al tratarse de archivos intermedios se puede dejar así, aunque estaría bien mejorar esta parte
                 vl_l2 = "validatingTest_knownResources_L2.csv",
                 tr_l3 = "trainingTest_knownResources_L3.csv",
@@ -249,7 +254,7 @@ if(opt$executionMode %in% c("P_M_E")){
 if(opt$executionMode %in% c("P_M_E","M_E")){
   modeling(approachSelected = opt$approach,
            algorithmSelected = opt$algorithm,
-           randomSeed = opt$seed,
+           randomSeed = as.numeric(opt$seed),
            isCrossValidation = as.logical(opt$cross_validation),
            nSplits = opt$number_casesOrFolds,
            ontology = ontologia_owl,
@@ -269,6 +274,21 @@ if(opt$executionMode %in% c("P_M_E","M_E")){
            vl_l5 = "validatingTest_knownResources_L5.csv",
            tr_l6 = "trainingTest_knownResources_L6.csv",
            vl_l6 = "validatingTest_knownResources_L6.csv")
+  
+  if(as.logical(opt$cross_validation)){
+    for(i in 1:as.numeric(opt$number_casesOrFolds)){
+      evaluating(pathDT_GeneratedCompleted = paste(opt$pathOut,"fold",i,"/",opt$fileOut,".ttl",sep=""),
+                 pathDT_ReservedCompleted = paste(getwd(),"/",opt$pathIntermediateData,"fold",i,"/","reserva.ttl",sep=""),
+                 pathLevelsCompleted = paste(getwd(),"/levels_ontology/",ontologia,"/",sep=""),
+                 pathOutput = paste(opt$pathOut,"fold",i,"/","evaluacion_",opt$fileOut,".csv",sep=""))
+    }
+  }else{
+    evaluating(pathDT_GeneratedCompleted = paste(opt$pathOut,opt$fileOut,".ttl",sep=""),
+               pathDT_ReservedCompleted = paste(getwd(),"/",opt$pathIntermediateData,"reserva.ttl",sep=""),
+               pathLevelsCompleted = paste(getwd(),"/levels_ontology/",ontologia,"/",sep=""),
+               pathOutput = paste(opt$pathOut,"evaluacion_",opt$fileOut,".csv",sep=""))
+  }
+  
 }
 
 # #TO-DO: función que coja de entrada la carpeta con los modelos y un conjunto de datos y realice predicciones
@@ -277,17 +297,5 @@ if(opt$executionMode %in% c("P_M_E","M_E")){
 # }
 
 
-if(as.logical(opt$cross_validation)){
-  for(i in 1:as.numeric(opt$number_casesOrFolds)){
-    evaluating(pathDT_GeneratedCompleted = paste(opt$pathOut,"fold",i,"/",opt$fileOut,".ttl",sep=""),
-               pathDT_ReservedCompleted = paste(getwd(),"/",opt$pathIntermediateData,"fold",i,"/","reserva.ttl",sep=""),
-               pathLevelsCompleted = paste(getwd(),"/levels_ontology/",ontologia,"/",sep=""),
-               pathOutput = paste(opt$pathOut,"fold",i,"/","evaluacion_",opt$fileOut,".csv",sep=""))
-  }
-}else{
-  evaluating(pathDT_GeneratedCompleted = paste(opt$pathOut,opt$fileOut,".ttl",sep=""),
-             pathDT_ReservedCompleted = paste(getwd(),"/",opt$pathIntermediateData,"reserva.ttl",sep=""),
-             pathLevelsCompleted = paste(getwd(),"/levels_ontology/",ontologia,"/",sep=""),
-             pathOutput = paste(opt$pathOut,"evaluacion_",opt$fileOut,".csv",sep=""))
-}
+
 
