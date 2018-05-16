@@ -230,7 +230,7 @@ c50_n5_m3 <- C50::C5.0( df_training_sinDesc_N5[,c(2:(ncol(df_training_sinDesc_N5
 get_memoryStats(currentPid = Sys.getpid(), currentFunctionPoint = "app2_C5.0 level 5",isAfter = TRUE)
 
 lista_modelos <- list(c50_nivel1_v3,c50_n2_m1,c50_n2_m3,c50_n3_m1,c50_n3_m3,c50_n4_m1,c50_n4_m3,c50_n5_m1,c50_n5_m3)
-save(lista_modelos, file = paste(getwc(),"/",opt$outputPath,opt$nameModel,".RData",sep=""))
+save(lista_modelos, file = paste(getwd(),"/",opt$outputPath,opt$nameModel,".RData",sep=""))
 
 
 

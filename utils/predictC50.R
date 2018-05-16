@@ -1,0 +1,142 @@
+#!/usr/bin/env Rscript
+#predictC50.R
+
+#Input parameters
+# -i --inputData  : .ttl file with properties and objects that will be predicted.
+# -m --modelPath  : .RData which contains C5.0 models.
+# -o --outputData : path to indicate where predictions should be saved.
+# -d --domain     : indicates if it is English or Spanish. It means, if URIs starts with '<http://dbpedia.org/resource/' or '<http://es.dbpedia.org/resource/'.
+
+library("optparse")
+source(paste(getwd(),"/preparating/module_preparating.R",sep=""))
+source(paste(getwd(),"/modeling/module_modeling.R",sep=""))
+library(C50)
+
+
+option_list <- list(
+  make_option(c("-i","--inputData", type="character", default = NULL),
+              help=".ttl file with properties and objects that will be predicted.",
+              metavar="character"),
+  make_option(c("-m","--modelPath", type="character", default = NULL),
+              help=".RData which contains C5.0 model",
+              metavar="character"),
+  make_option(c("-o","--outputData", type="character", default = NULL),
+              help="path to indicate where predictions should be saved.",
+              metavar="character"),
+  make_option(c("-d","--domain", type="character", default = NULL),
+              help="indicates if it is English or Spanish. It means, if URIs starts with '<http://dbpedia.org/resource/' or '<http://es.dbpedia.org/resource/'.",
+              metavar="character")
+)
+
+opt_parser <- OptionParser(usage = "Usage: %prog <options>",
+                           description = "Description:
+                           This software provides a way to predict new types using trained models with C5.0 algorithm and a properties.ttl formtat as predictors.
+                           ",
+                           epilogue = "
+                                      Notes:
+                           - Each directory used in arguments should end with slash ('/').
+                           - All directories are relative, not absolute.
+                           - Every path should points to a place into execution folder.",
+                           option_list=option_list)
+
+opt <- parse_args(opt_parser)
+
+
+
+dominio <- '^<http://dbpedia.org/resource/' #de momento, ingles por defecto
+if(opt$domain %in% c("ES")){
+  dominio <- '^<http://es.dbpedia.org/resource/'
+}else if(opt$domain %in% c("EN")){
+  dominio <- '^<http://dbpedia.org/resource/'
+} else{
+  print("error, mejorar aviso, aunque nunca deberia llegar a este punto")
+}
+
+prepare_properties(file_properties_In = opt$inputData, 
+                   file_object_propertiesMatrix_Out = opt$outputData,
+                   domain_resourcesURI = dominio)
+
+
+df_data <- read.csv(file=paste(opt$outputData,"objects_properties_Matrix.csv",sep = ''),
+                        header=FALSE, sep=",", encoding = "UTF-8", stringsAsFactors = FALSE)
+colnames(df_data) <- df_data[1,]
+df_data <- df_data[-1,]
+df_data[,c(2:(ncol(df_data)))] <- sapply(df_data[,c(2:(ncol(df_data)))], as.numeric)
+
+# modelWrapper <- load(file = opt$modelPath)
+load(file = opt$modelPath)
+
+c50_nivel1_v3 <- lista_modelos[1]
+
+c50_n2_m1 <- lista_modelos[2]
+c50_n2_m3 <- lista_modelos[3]
+
+c50_n3_m1 <- lista_modelos[4]
+c50_n3_m3 <- lista_modelos[5]
+
+c50_n4_m1 <- lista_modelos[6]
+c50_n4_m3 <- lista_modelos[7]
+
+c50_n5_m1 <- lista_modelos[8]
+c50_n5_m3 <- lista_modelos[9]
+
+
+
+
+test1_n1 <- predict(object = c50_nivel1_v3, newdata = df_data[,2:(ncol(df_data))])
+test1_n2_m1 <- predict(object = c50_n2_m1, newdata = df_data[,c(2:(ncol(df_data)))])
+test1_n2_m3 <- predict(object = c50_n2_m3, newdata = df_data[,c(2:(ncol(df_data)))])
+test1_n3_m1 <- predict(object = c50_n3_m1, newdata = df_data[,c(2:(ncol(df_data)))])
+test1_n3_m3 <- predict(object = c50_n3_m3, newdata = df_data[,c(2:(ncol(df_data)))])
+test1_n4_m1 <- predict(object = c50_n4_m1, newdata = df_data[,c(2:(ncol(df_data)))])
+test1_n4_m3 <- predict(object = c50_n4_m3, newdata = df_data[,c(2:(ncol(df_data)))])
+test1_n5_m1 <- predict(object = c50_n5_m1, newdata = df_data[,c(2:(ncol(df_data)))])
+test1_n5_m3 <- predict(object = c50_n5_m3, newdata = df_data[,c(2:(ncol(df_data)))])
+
+
+est1 <- cbind(as.data.frame(df_data[,1]),     #1
+              test1_n1,    #2
+              test1_n2_m1, #3
+              test1_n2_m3, #4
+              test1_n3_m1, #5
+              test1_n3_m3, #6
+              test1_n4_m1, #7
+              test1_n4_m3, #8
+              test1_n5_m1, #9
+              test1_n5_m3) #10
+colnames(test1) <- c("s",          #1
+                     "Class1",     #2
+                     "Class2_m1",  #3
+                     "Class2_m3",  #4
+                     "Class3_m1",  #5
+                     "Class3_m3",  #6
+                     "Class4_m1",  #7
+                     "Class4_m3",  #8
+                     "Class5_m1",  #9
+                     "Class5_m3")  #10
+
+write.csv(test1, file = paste(pathOutput,nameOutputFile,".csv",sep=""), fileEncoding = "UTF-8", row.names=FALSE)
+
+salida_test1_n1 <- test1[,c(1,2)]
+colnames(salida_test1_n1) <- c("s","o")
+salida_test1_n2 <- test1[test1$Class2_m1!="desconocido",c(1,4)]
+colnames(salida_test1_n2) <- c("s","o")
+salida_test1_n3 <- test1[test1$Class3_m1!="desconocido",c(1,6)]
+colnames(salida_test1_n3) <- c("s","o")
+salida_test1_n4 <- test1[test1$Class4_m1!="desconocido",c(1,8)]
+colnames(salida_test1_n4) <- c("s","o")
+salida_test1_n5 <- test1[test1$Class5_m1!="desconocido",c(1,10)]
+colnames(salida_test1_n5) <- c("s","o")
+
+salida_test1 <- rbind(salida_test1_n1,
+                      salida_test1_n2,
+                      salida_test1_n3,
+                      salida_test1_n4,
+                      salida_test1_n5)
+
+salida_test1$p <- "<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>"
+salida_test1[,c(1,2,3)] <- salida_test1[,c(1,3,2)]
+write.table(salida_test1, file = paste(pathOutput,nameOutputFile,".ttl",sep=""),
+            fileEncoding = "UTF-8", sep = " ", row.names=FALSE, col.names=FALSE, quote = FALSE)
+
+
