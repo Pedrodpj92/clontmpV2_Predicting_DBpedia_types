@@ -206,7 +206,6 @@ app2_C50 <- function(randomSeed, pathInput, pathOutput, pathOutputModel, nameOut
               fileEncoding = "UTF-8", sep = " ", row.names=FALSE, col.names=FALSE, quote = FALSE)
   
   return(0)
-  
 }
 
 
@@ -454,7 +453,8 @@ app2_DL <- function(randomSeed, pathInput, pathOutput, pathOutputModel, nameOutp
   write.table(salida_test1, file = paste(pathOutput,nameOutputFile,".ttl", sep = ''),
               fileEncoding = "UTF-8", sep = " ", row.names=FALSE, col.names=FALSE, quote = FALSE)
   
-  
+  h2o.removeAll()
+  h2o.shutdown()
   return(0)
 }
 
@@ -729,6 +729,8 @@ app2_RF <- function(randomSeed, pathInput, pathOutput, pathOutputModel,  nameOut
   write.table(salida_test1_rf, file = paste(pathOutput,nameOutputFile,".ttl", sep = ''),
             fileEncoding = "UTF-8",sep=" ", row.names=FALSE,col.names=FALSE, quote = FALSE)
   
+  h2o.removeAll()
+  h2o.shutdown()
   return(0)
 }
 

@@ -1,9 +1,13 @@
 #!/bin/bash
-#lanzador_lanzaMains_EN_201610_V3.sh
+#lanzador_lanzaMains_V5.sh
 
+#remember use chmod to adapt your execution permissions
+date
 echo $0
 echo "work directory $PWD "
-
+#execution examples:
+# ./lanzador_lanzaMains_V5.sh EN 201610 10000 inputData/instance_types_completo_en.ttl inputData/mappingbased_objects_uncleaned_en.ttl
+# ./lanzador_lanzaMains_V5.sh ES 201610 2500 inputData/instance_types_completo_es.ttl inputData/mappingbased_objects_uncleaned_es.ttl
 if [ "$#" -gt 0 ]; then
   export DBPLANG=$1
 else
@@ -60,9 +64,17 @@ do
    echo "intermediate data (train/validate files) and output (evaluation and models) for this seed are in $PWD/seed$i/"
    mkdir -p $PWD/seed$i/
    { time ./lanzaMains_V5.sh $DBPLANG $ONTOVERSION $CASOSVAL $i $TYPES $PROPERTIES >> $PWD/seed$i/$SALIDA$DBPLANG$ONTOVERSION$SEMILLA$i$TXTFILE ; } 2> $PWD/seed$i/$TIEMPO$DBPLANG$ONTOVERSION$SEMILLA$i$TXTFILE
-   echo "used space in disk:"
+   echo "used space in disk at $PWD/seed$i/ :"
+   df -h $PWD/seed$i/
+   echo "compressing generated files"
+   tar -zcvf $PWD/dataSeed$i.tar.gz $PWD/seed$i/
+   echo "deleting intermediate data"
+   rm -r $PWD/seed$i/intermediateData*/
+   echo "used space in disk at $PWD/seed$i/ :"
    df -h $PWD/seed$i/
 done
+
+date
 
 #execution example:
 #./lanzaMains_V5.sh "EN" "201610" 1234

@@ -208,17 +208,78 @@ modeling <- function(approachSelected,
   print("ending modeling module")
 }
 
-predicting <- function(approachSelected,
-                       algorithmSelected,
-                       randomSeed,
-                       pathInput,
-                       pathOutput,
-                       pathOutputModel,
-                       nameOutputFile,
-                       tr,
-                       vl,
-                       tr_l2, vl_l2, tr_l3, vl_l3, tr_l4, vl_l4, tr_l5, vl_l5, tr_l6, vl_l6){
+# predicting <- function(approachSelected,
+#                        algorithmSelected,
+#                        randomSeed,
+#                        pathInput,
+#                        pathInputModel,
+#                        pathOutput,
+#                        nameOutputFile,
+#                        tr,
+#                        vl,
+#                        tr_l2, vl_l2, tr_l3, vl_l3, tr_l4, vl_l4, tr_l5, vl_l5, tr_l6, vl_l6){
   
+  #solo nos interesa C50, por lo que esta funcion queda congelada
   
-  
-}
+  # if(approachSelected %in% c("global_ap1")){
+  #   print("starting global approach 1")
+  #   get_memoryStats(currentPid = Sys.getpid(), currentFunctionPoint = "predicting approach 1 global",isAfter = FALSE)
+  #   if(algorithmSelected %in% c("NB")){
+  #     predict_app1_nb()
+  #   }else if(algorithmSelected %in% c("DL")){
+  #     predict_app1_dl()
+  #   }else if(algorithmSelected %in% c("RF")){
+  #     predict_app1_rf()
+  #   }else{
+  #     stop("global approach (approach1) can just be executed with Naive Bayes, Deep Learning or Random Forest.", call.=FALSE)
+  #   }
+  #   get_memoryStats(currentPid = Sys.getpid(), currentFunctionPoint = "predicting approach 1 global",isAfter = TRUE)
+  #   system(command = paste("java -jar ",
+  #                          getwd(),"/levels_ontology/dbotypes.jar ",
+  #                          getwd(),"/levels_ontology/",ontology,
+  #                          " ",
+  #                          paste(pathOutput,
+  #                                nameOutputFile,".ttl",sep = ""),sep=""))
+  #   system(command = paste("mv ",
+  #                          paste(pathOutput,
+  #                                nameOutputFile,".ttl.extended.csv",sep = ""),
+  #                          " ",
+  #                          paste(pathOutput,
+  #                                nameOutputFile,".ttl",sep = ""),sep=""))
+  #   get_memoryStats(currentPid = Sys.getpid(), currentFunctionPoint = "call dbotypes.jar",isAfter = TRUE)
+  # }else if(approachSelected %in% c("multilevel_ap2")){
+  #   print("starting multilevel approach 2")
+  #   get_memoryStats(currentPid = Sys.getpid(), currentFunctionPoint = "predicting approach 2 multilevel",isAfter = FALSE)
+  #   if(algorithmSelected %in% c("C5.0")){
+  #     predict_app2_C50()
+  #   }else if(algorithmSelected %in% c("DL")){
+  #     predict_app2_DL()
+  #   }else if(algorithmSelected %in% c("RF")){
+  #     predict_app2_RF()
+  #   }else{
+  #     stop("multilevel approach (approach2) can just be executed with C5.0, Deep Learning or Random Forest.", call.=FALSE)
+  #   }
+  #   get_memoryStats(currentPid = Sys.getpid(), currentFunctionPoint = "predicting approach 2 multilevel",isAfter = TRUE)
+  # }else if(approachSelected %in% c("cascade_ap3")){
+  #   get_memoryStats(currentPid = Sys.getpid(), currentFunctionPoint = "predicting approach 3 cascade",isAfter = FALSE)
+  #   if(algorithmSelected %in% c("DL")){
+  #     app3_DL(randomSeed = randomSeed,
+  #             pathInput = pathInput,
+  #             pathOutputModel = pathOutputModel,
+  #             pathOutput = pathOutput,
+  #             nameOutputFile = nameOutputFile,
+  #             tr = tr, vl = vl,
+  #             tr_l2 = tr_l2, vl_l2 = tr_l2,
+  #             tr_l3 = tr_l3, vl_l3 = tr_l3,
+  #             tr_l4 = tr_l4, vl_l4 = tr_l4,
+  #             tr_l5 = tr_l5, vl_l5 = tr_l5)
+  #   }else if(algorithmSelected %in% c("RF")){
+  #     predict_app3_RF()
+  #   }else{
+  #     stop("cascade approach (approach3) can just be executed with Deep Learning or Random Forest.", call.=FALSE)
+  #   }
+  #   get_memoryStats(currentPid = Sys.getpid(), currentFunctionPoint = "predicting approach 3 cascade",isAfter = FALSE)
+  # }else{
+  #   stop("not proper approach selected, please, select one avaliable <global_ap1 | multilevel_ap2 | cascade_ap3> ", call.=FALSE)
+  # }
+# }

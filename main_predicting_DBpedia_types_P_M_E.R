@@ -154,7 +154,7 @@ if(!is.null(opt$test_ingoingCondition) && as.logical(opt$cross_validation)){
   print_help(opt_parser)
   stop("test_ingoingCondition argument should not be supplied if cross_validation is TRUE", call.=FALSE)
 }
-if(opt$executionMode %in% c("P_M_E"," P","M_E")){
+if(!(opt$executionMode %in% c("P_M_E","P","M_E"))){
   print_help(opt_parser)
   stop(paste("Please, select one execution mode using -x or --executionMode options : <P_M_E | P | M_E>",opt$executionMode), call.=FALSE)
 }

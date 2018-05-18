@@ -161,7 +161,7 @@ solucion <- getDiff_dt(pathLeft = opt$datasetLeft,
                         pathOutput = opt$pathOut)
 
 print(solucion)
-write.csv(solucion, file = paste(opt$pathOutput,solucion,sep = ''),
+write.csv(solucion, file = paste(opt$pathOutput,"resumen_diferencias.csv",sep = ''),
           fileEncoding = "UTF-8", row.names=FALSE)
 
 

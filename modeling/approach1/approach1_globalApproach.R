@@ -48,10 +48,23 @@ app1_nb <- function(randomSeed, pathInput, pathOutput, pathOutputModel, nameOutp
   write.table(salida_test, file = paste(pathOutput,nameOutputFile,".ttl",sep=''),
               fileEncoding = "UTF-8", sep = " ", row.names=FALSE, col.names = FALSE)
   
+  h2o.removeAll()
+  h2o.shutdown()
   return(0)
-  
-  
 }
+
+# predict_app1_nb <- function(){
+#   
+#   library(h2o)
+#   h2o.init(
+#     nthreads=-1            ## -1: use all available threads
+#     #max_mem_size = "2G"
+#   )
+#   
+#   df_validating_test <- h2o.importFile(path = normalizePath(paste(pathInput,vl,sep = '')), header = TRUE)
+#   
+#   return(0)
+# }
 
 
 
@@ -99,8 +112,9 @@ app1_dl <- function(randomSeed, pathInput, pathOutput, pathOutputModel, nameOutp
   write.table(salida_test, file = paste(pathOutput,nameOutputFile,".ttl",sep=''),
               fileEncoding = "UTF-8", sep = " ", row.names=FALSE, col.names = FALSE)
   
+  h2o.removeAll()
+  h2o.shutdown()
   return(0)
-  
 }
 
 
@@ -153,7 +167,8 @@ app1_rf <- function(randomSeed, pathInput, pathOutput, pathOutputModel, nameOutp
   write.table(salida_test, file = paste(pathOutput,nameOutputFile,".ttl",sep=''),
               fileEncoding = "UTF-8", sep = " ", row.names=FALSE, col.names = FALSE)
   
+  h2o.removeAll()
+  h2o.shutdown()
   return(0)
-  
 }
 

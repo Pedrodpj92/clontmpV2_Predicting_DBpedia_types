@@ -31,7 +31,49 @@ prepare_properties <- function(file_properties_In,
   
   
   conversion_Matriz <- original_resources[,c(3,2)]
-  conversion_Matriz <- dcast(conversion_Matriz, o ~ p, fill=0)#ojo, puede tardar bastante
+  
+  if(nrow(conversion_Matriz)>5000000){
+    resumen_propiedades <- as.data.frame(table(conversion_Matriz$p))
+    
+    nDivisiones <- 5
+    nProp <- nrow(resumen_propiedades)/nDivisiones
+    nProp <- round(nProp)
+    
+    guardaTrozos <- vector("matrixPropParts",nDivisiones)
+    # example if nrow(resumen_propiedades) == 102
+    # then nProp <- 20 <- {round(102/5)} and...
+    # i in the loop has values 0, 1, 2 and 3
+    # so first iteration matrix_aux get properties  from 1 <- {20*0+1} to 20 <- {20*(0+1)}
+    # so second iteration matrix_aux get properties from 21 <- {20*1+1} to 40 <- {20*(1+1)}
+    # so third iteration matrix_aux get properties  from 41 <- {20*2+1} to 60 <- {20*(2+1)}
+    # so fourth iteration matrix_aux get properties from 61 <- {20*3+1} to 80 <- {20*(3+1)}
+    # the fifth iteration (out of the loop) matrix_aux get last properties from 81 <- {20*(5-1)+1} to 102 <- {nrow(resumen_propiedades)}
+    #
+    # if nrow(resumen_propiedades) == 103
+    # then nPropi <- 21 {round(103/5)}, last gap would go from 85 <- {21*(5-1)+1} to 103 <- {nrow(resumen_propiedades)}
+    for(i in 0:(nDivisiones-2)){#last gap goes until nrow()
+      matriz_aux <- resumen_propiedades[((nProp*i)+1):(nProp*(i+1)),]
+      conversion_matriz_aux <- conversion_Matriz[conversion_Matriz$p %in% matriz_aux$Var1,]
+      conversion_matriz_aux <- dcast(conversion_matriz_aux, o ~ p, fill=0)
+      guardaTrozos[[(i+1)]] <- conversion_matriz_aux
+    }
+    matriz_aux <- resumen_propiedades[(nProp*(nDivisiones-1)+1):nrow(resumen_propiedades),]
+    conversion_matriz_aux <- conversion_Matriz[conversion_Matriz$p %in% matriz_aux$Var1,]
+    conversion_matriz_aux <- dcast(conversion_matriz_aux, o ~ p, fill=0)
+    guardaTrozos[[nDivisiones]] <- conversion_matriz_aux
+    
+    #mergin data
+    datos_unidos <- guardaTrozos[[1]]
+    for(i in 1:(nDivisiones-1)){
+      datos_unidos <- merge(x = datos_unidos,y = guardaTrozos[[i+1]], by= "o", all = TRUE)
+    }
+    datos_unidos[is.na(datos_unidos)] <- 0
+    conversion_Matriz <- datos_unidos
+    
+  }else {
+    conversion_Matriz <- dcast(conversion_Matriz, o ~ p, fill=0)#ojo, puede tardar bastante
+  }
+  
   # print(nrow(conversion_Matriz))
   write.csv(conversion_Matriz, file = file_object_propertiesMatrix_Out,
             fileEncoding = "UTF-8", row.names=FALSE)
@@ -247,6 +289,8 @@ prepare_app1 <- function(file_object_propertiesMatrix_In, file_instance_types_In
   #cambiamos la o de object por la s de subject para facilitar el merge en la función posterior
   colnames(conversion_Matriz)[1] <- 's'
   learning_Hojas <- merge(x = conversion_Matriz, y = hojas_recursosTypes, by = 's')
+  
+  learning_Hojas <- learning_Hojas[!duplicated(learning_Hojas$s),]
   
   colnames(learning_Hojas)[ncol(learning_Hojas)] <- 'Class'
   write.csv(learning_Hojas, file = file_learningSet_Out, fileEncoding = "UTF-8", row.names=FALSE)

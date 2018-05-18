@@ -1,5 +1,4 @@
 #!/bin/bash
-#lanzaMains_EN_201610_V3.sh OLD
 #lanzaMains_V5.sh
 
 #para ejecutar las pruebas de manera secuencial
@@ -7,7 +6,8 @@
 #export HOMEDIR="/home/ppozo/clontmpV2_Predicting_DBpedia_types-master"
 #export DBPLANG=$1         #Valores posibles: "EN", "ES"
 #export ONTOVERSION=$2     #Valores posibles: "39", "2014", "201610"
-#export SEED=$3            #Semilla aleatoria para la seleccion de datos y el modelado
+#export CASOSVAL=$3        #Valores posibles: numero entero, para EnDBpedia se suelen escoger 10000 casos y para EsDBpedia 2500 
+#export SEED=$4            #Semilla aleatoria para la seleccion de datos y el modelado
 
 #execution example:
 #./lanzaMains_V5.sh "EN" "201610" 1234
@@ -51,9 +51,7 @@ else
 fi
 
 
-#Asume directorio pruebasRealizadas
-#Asume directorio pruebasRealizadas/intermediateData
-#Asume directorio pruebasRealizadas/outputData
+
 #Asume directorio inputData
 #Asume en directorio inputData los ficheros 
 #      mappingbased_objects_uncleaned_en.ttl 

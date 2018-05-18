@@ -273,6 +273,9 @@ app3_DL <- function(randomSeed, pathInput, pathOutput, pathOutputModel, nameOutp
   write.table(salida_test1, file = paste(pathOutput,nameOutputFile,".ttl", sep = ''),
               fileEncoding = "UTF-8", sep = " ", row.names=FALSE, col.names=FALSE, quote = FALSE)
   
+  h2o.removeAll()
+  h2o.shutdown()
+  return(0)
 }
 
 
@@ -543,7 +546,8 @@ app3_RF <- function(randomSeed, pathInput, pathOutput, pathOutputModel, nameOutp
   write.table(salida_test1_rf, file = paste(pathOutput,nameOutputFile,".ttl", sep = ''),
               fileEncoding = "UTF-8", sep = " ", row.names=FALSE, col.names=FALSE, quote = FALSE)
   
-  
-  
+  h2o.removeAll()
+  h2o.shutdown()
+  return(0)
 }
 

@@ -57,7 +57,7 @@ divide_oneSplit <- function(file_learningSet_In,
                              f_l3 = paste(path_files_trainValidate_Out,vl_l3,sep=""),
                              f_l4 = paste(path_files_trainValidate_Out,vl_l4,sep=""),
                              f_l5 = paste(path_files_trainValidate_Out,vl_l5,sep=""),
-                             f_l6 = paste(path_files_trainValidate_Out,vl_l6sep=""))
+                             f_l6 = paste(path_files_trainValidate_Out,vl_l6,sep=""))
   }
   
   rm(list=ls())
