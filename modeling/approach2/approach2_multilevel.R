@@ -454,7 +454,7 @@ app2_DL <- function(randomSeed, pathInput, pathOutput, pathOutputModel, nameOutp
               fileEncoding = "UTF-8", sep = " ", row.names=FALSE, col.names=FALSE, quote = FALSE)
   
   h2o.removeAll()
-  h2o.shutdown()
+  h2o.shutdown(prompt=FALSE)
   return(0)
 }
 
@@ -730,7 +730,7 @@ app2_RF <- function(randomSeed, pathInput, pathOutput, pathOutputModel,  nameOut
             fileEncoding = "UTF-8",sep=" ", row.names=FALSE,col.names=FALSE, quote = FALSE)
   
   h2o.removeAll()
-  h2o.shutdown()
+  h2o.shutdown(prompt=FALSE)
   return(0)
 }
 

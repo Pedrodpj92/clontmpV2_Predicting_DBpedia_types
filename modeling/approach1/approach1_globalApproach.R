@@ -49,7 +49,7 @@ app1_nb <- function(randomSeed, pathInput, pathOutput, pathOutputModel, nameOutp
               fileEncoding = "UTF-8", sep = " ", row.names=FALSE, col.names = FALSE)
   
   h2o.removeAll()
-  h2o.shutdown()
+  h2o.shutdown(prompt=FALSE)
   return(0)
 }
 
@@ -113,7 +113,7 @@ app1_dl <- function(randomSeed, pathInput, pathOutput, pathOutputModel, nameOutp
               fileEncoding = "UTF-8", sep = " ", row.names=FALSE, col.names = FALSE)
   
   h2o.removeAll()
-  h2o.shutdown()
+  h2o.shutdown(prompt=FALSE)
   return(0)
 }
 
@@ -168,7 +168,7 @@ app1_rf <- function(randomSeed, pathInput, pathOutput, pathOutputModel, nameOutp
               fileEncoding = "UTF-8", sep = " ", row.names=FALSE, col.names = FALSE)
   
   h2o.removeAll()
-  h2o.shutdown()
+  h2o.shutdown(prompt=FALSE)
   return(0)
 }
 
