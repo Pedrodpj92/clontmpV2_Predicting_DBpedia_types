@@ -39,7 +39,7 @@ prepare_properties <- function(file_properties_In,
     nProp <- nrow(resumen_propiedades)/nDivisiones
     nProp <- round(nProp)
     
-    guardaTrozos <- vector("matrixPropParts",nDivisiones)
+    guardaTrozos <- vector("list",nDivisiones)
     # example if nrow(resumen_propiedades) == 102
     # then nProp <- 20 <- {round(102/5)} and...
     # i in the loop has values 0, 1, 2 and 3
