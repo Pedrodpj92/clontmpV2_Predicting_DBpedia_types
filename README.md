@@ -33,6 +33,7 @@ if (! ("jsonlite" %in% rownames(installed.packages()))) { install.packages("json
 if (! ("tools" %in% rownames(installed.packages()))) { install.packages("tools") }
 if (! ("utils" %in% rownames(installed.packages()))) { install.packages("utils") }
 if (! ("optparse" %in% rownames(installed.packages()))) { install.packages("optparse") }
+if (! ("partykit" %in% rownames(installed.packages()))) { install.packages("partykit") }
 ```
 
 * The specific versions of the packages related to ML used in the experiments are these:
