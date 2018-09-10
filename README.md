@@ -35,7 +35,7 @@ if (! ("utils" %in% rownames(installed.packages()))) { install.packages("utils")
 if (! ("optparse" %in% rownames(installed.packages()))) { install.packages("optparse") }
 ```
 
-* Used ML versions
+* The specific versions of the packages related to ML used in the experiments are these:
 ```
 url_h2o <- "https://cran.r-project.org/src/contrib/Archive/h2o/h2o_3.16.0.1.tar.gz"
 install.packages(url_h2o, repos=NULL, type="source")
@@ -44,7 +44,7 @@ url_c50 <- "https://cran.r-project.org/src/contrib/Archive/C50/C50_0.1.0-24.tar.
 install.packages(url_c50, repos=NULL, type="source")
 ```
 
-* Last ML versions
+* But, if you are interested in using the latest versions of these ML packages, do this:
 ```
 install.packages("h2o", type="source", repos=(c("http://h2o-release.s3.amazonaws.com/h2o/latest_stable_R")))
 
