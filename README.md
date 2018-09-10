@@ -14,11 +14,8 @@ Clone or download the source code into your machine. Check next section to find 
 * 64-bits machine
 * [R 3.0.0](https://www.r-project.org/ ) or later
 * [Java 1.7](https://www.java.com/es/download/) or later
-* [RCurl](https://cran.r-project.org/web/packages/RCurl/RCurl.pdf) version 1.95-4.8 or later
-* [jsonlite](https://cran.r-project.org/web/packages/jsonlite/jsonlite.pdf) version 1.5 or later
-* [H2O library](https://www.h2o.ai/) version 3.16.0.1 or later
-* [C5.0 R library](https://cran.r-project.org/web/packages/C50/C50.pdf) version 0.1.0-24 or later
-* [optparse](https://cran.r-project.org/web/packages/optparse/optparse.pdf) version 1.4.4 or later
+* [curl] Ubuntu: sudo apt install libcurl4-openssl-dev curl  
+
 
  
 ### Installing R packages
