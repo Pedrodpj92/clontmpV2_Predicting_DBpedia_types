@@ -10,6 +10,7 @@ The current version works with the DBpedia ontology, versions 3.9, 2014 and 2016
 Clone or download the source code into your machine. Check next section to find libraries and software required and how to install them
 
 ### Prerequisites
+We use Ubuntu 16.04. The instructions are for this platform. Although we do not provide instructions for other platforms, we are willing to add contributions for other platforms when provided. 
 
 * 64-bits machine
 * [R 3.0.0](https://www.r-project.org/ ) or later
