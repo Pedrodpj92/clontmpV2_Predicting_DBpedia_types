@@ -32,7 +32,7 @@ opt_parser <- OptionParser(usage = "Usage: %prog -l <first dataset path> -r <sec
                             - left_exclude_right: amount of rows (triples) found after left exclude operation. It means that these triples only can be found in first dataset.
                             - right_exclude_left: amount of rows (triples) found after right exclude operation. It means that these triples only can be found in second dataset.",
                            epilogue = "Examples: 
-                           %prog -l myDatasets/dummyTypes1.ttl myDatasets/myOtherDummyTypes2.ttl -o myTests/lookingForDifferences/dummyTypes/",
+                           %prog -l myDatasets/dummyTypes1.ttl -r myDatasets/myOtherDummyTypes2.ttl -o myTests/lookingForDifferences/dummyTypes/",
                            option_list=option_list)
 
 
