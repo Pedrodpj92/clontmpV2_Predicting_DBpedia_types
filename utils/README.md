@@ -34,7 +34,7 @@ Options:
                 Show this help message and exit
 
 Examples:
-                           ./main_diff_datos.R -l myDatasets/dummyTypes1.ttl myDatasets/myOtherDummyTypes2.ttl -o myTests/lookingForDifferences/dummyTypes/
+                           ./main_diff_datos.R -l myDatasets/dummyTypes1.ttl -r myDatasets/myOtherDummyTypes2.ttl -o myTests/lookingForDifferences/dummyTypes/
 
 ```
 
